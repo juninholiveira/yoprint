@@ -3,7 +3,7 @@
 ;loads all needed subroutines
 (if (findfile "R:\\INTERIORES\\1.PADRÃO\\Padrão PB - AutoCad\\Plugins\\PluginsToLoad")
   (mapcar '(lambda (x)
-             (if (wcmatch (strcase x) "*.LSP")
+             (if (wcmatch (strcase x) "*.LSP,*.VLX")
                (load
                  (strcat (findfile "R:\\INTERIORES\\1.PADRÃO\\Padrão PB - AutoCad\\Plugins\\PluginsToLoad") "\\" x)
                ) ;_ load
