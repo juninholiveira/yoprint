@@ -1,5 +1,20 @@
 (vl-load-com)
 
+; IMPRESSORAS
+(setq pdfPlotter "DWG TO PDF.PC3")
+(setq a4Plotter "Brother DCP-7065DN Printer")
+(setq a3plotter "\\\\Pauladesk\\EPSON L1300 Series")
+
+; PAPÉIS
+(setq a4fullbleed "ISO FULL BLEED A4 (297.00 x 210.00 MM)")
+(setq a3fullbleed "ISO FULL BLEED A3 (420.00 x 297.00 MM)")
+(setq a2fullbleed "ISO FULL BLEED A2 (594.00 x 420.00 MM)")
+
+; CTB
+(setq ctb "ctb - paula e bruna.ctb")
+
+
+
 (setvar "BACKGROUNDPLOT" 2)	                                                    ;Aqui eu seto a variável do sistema pra PLOT em foreground e PUBLISH em background (Número 2)
 
 ;Aui eu reseto os
@@ -176,7 +191,7 @@
                 (command "-plot"
                          "yes"
                          (car x)
-                         "DWG TO PDF.PC3"
+                         pdfplotter
                          "ISO FULL BLEED A4 (297.00 x 210.00 MM)"
                          "Millimeters"
                          "Landscape"
@@ -187,7 +202,7 @@
                          escala
                          "Center"
                          "yes"
-                         "ctb - paula e bruna.ctb"
+                         ctb
                          "yes"
                          ""
                 )
@@ -292,15 +307,15 @@
 				(if (= blocksize "A2-125") (setq escala "1=12.5"))
 
 				(setq papersize "Fit")
-				(if (= blocksize "A4-75") (setq papersize "ISO FULL BLEED A4 (297.00 x 210.00 MM)"))
-				(if (= blocksize "A4-100") (setq papersize "ISO FULL BLEED A4 (297.00 x 210.00 MM)"))
-				(if (= blocksize "A4-125") (setq papersize "ISO FULL BLEED A4 (297.00 x 210.00 MM)"))
-				(if (= blocksize "A3-75") (setq papersize "ISO FULL BLEED A3 (420.00 x 297.00 MM)"))
-				(if (= blocksize "A3-100") (setq papersize "ISO FULL BLEED A3 (420.00 x 297.00 MM)"))
-				(if (= blocksize "A3-125") (setq papersize "ISO FULL BLEED A3 (420.00 x 297.00 MM)"))
-				(if (= blocksize "A2-75") (setq papersize "ISO FULL BLEED A2 (594.00 x 420.00 MM)"))
-				(if (= blocksize "A2-100") (setq papersize "ISO FULL BLEED A2 (594.00 x 420.00 MM)"))
-				(if (= blocksize "A2-125") (setq papersize "ISO FULL BLEED A2 (594.00 x 420.00 MM)"))
+				(if (= blocksize "A4-75") (setq papersize a4fullbleed))
+				(if (= blocksize "A4-100") (setq papersize a4fullbleed))
+				(if (= blocksize "A4-125") (setq papersize a4fullbleed))
+				(if (= blocksize "A3-75") (setq papersize a3fullbleed))
+				(if (= blocksize "A3-100") (setq papersize a3fullbleed))
+				(if (= blocksize "A3-125") (setq papersize a3fullbleed))
+				(if (= blocksize "A2-75") (setq papersize a2fullbleed))
+				(if (= blocksize "A2-100") (setq papersize a2fullbleed))
+				(if (= blocksize "A2-125") (setq papersize a2fullbleed))
 
 
             (foreach x lst2
@@ -348,7 +363,7 @@
                 (command "-plot"
                          "yes"
                          (car x)
-                         "DWG TO PDF.PC3"
+                         pdfplotter
                          papersize
                          "Millimeters"
                          orientation
@@ -359,7 +374,7 @@
                          escala
                          "Center"
                          "yes"
-                         "ctb - paula e bruna.ctb"
+                         ctb
                          "yes"
                          ""
                 )
@@ -392,9 +407,6 @@
 ;PRINTSINGLESHEET ***************************************************************************************************************
 (defun printsinglesheet()
 
-
-(setq a3plotter "\\\\Pauladesk\\EPSON L1300 Series")
-
 ;Pede a prancha para imprimir
 (initget "Landscape Portrait")
 (setq orientation (cond ( (getkword "\nChoose [Landscape/Portrait] <Landscape>: ") ) ( "Landscape" )))
@@ -423,7 +435,7 @@
             (progn
               (setq papersize "A4")
               (setq escala "1=2.5")
-              (setq plotter "Brother DCP-7065DN Printer")
+              (setq plotter a4Plotter)
             )
           )
           (if
@@ -431,7 +443,7 @@
             (progn
               (setq papersize "A4")
               (setq escala "1=5")
-              (setq plotter "Brother DCP-7065DN Printer")
+              (setq plotter a4Plotter)
             )
           )
           (if
@@ -439,7 +451,7 @@
             (progn
               (setq papersize "A4")
               (setq escala "1=7.5")
-              (setq plotter "Brother DCP-7065DN Printer")
+              (setq plotter a4Plotter)
             )
           )
           (if
@@ -447,7 +459,7 @@
             (progn
               (setq papersize "A4")
               (setq escala "1=10")
-              (setq plotter "Brother DCP-7065DN Printer")
+              (setq plotter a4Plotter)
             )
           )
           (if
@@ -455,7 +467,7 @@
             (progn
               (setq papersize "A4")
               (setq escala "1=12.5")
-              (setq plotter "Brother DCP-7065DN Printer")
+              (setq plotter a4Plotter)
             )
           )
 
@@ -566,7 +578,7 @@
                                    escala
                                    "Center"
                                    "yes"
-                                   "ctb - paula e bruna.ctb"
+                                   ctb
                                    "yes"
                                    ""
                           )
@@ -895,7 +907,7 @@
              height (* (fix (/ height 5))5)))
      (GetOrCreateTableStyle "CadEng")
      (setq pt
-       (getpoint "\nPlace Table :")                                             ;Pede o ponto onde a tabela vai ser inserida
+       (getpoint "\nColocar a tabela:")                                             ;Pede o ponto onde a tabela vai ser inserida
        TblObj (vla-addtable
                 msp                     ;ModelSpace
                 (vlax-3d-point pt)      ;Passa o PT 2d pra 3d
@@ -998,7 +1010,7 @@
        ); while
        (command "_.regen")
      ); progn
-     (prompt "\nNo Block(s) selected.")
+     (prompt "\nNenhum bloco selecionado.")
    ); if [user selection]
 
    (vla-endundomark doc); = Undo End
