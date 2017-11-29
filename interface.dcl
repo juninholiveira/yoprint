@@ -1,4 +1,4 @@
-orientation : dialog 
+orientation : dialog
 {
 	: spacer {}
 
@@ -7,7 +7,7 @@ orientation : dialog
 		label = "Escolha a orientação das pranchas:";
 	}
 
-	: spacer {}	
+	: spacer {}
 
 	: row
 	{
@@ -17,13 +17,13 @@ orientation : dialog
 		label = "Retrato";
 		is_default = true;
 		}
-	
+
 		: button
 		{
 		key = "portrait";
 		label = "Retrato";
 		}
-	} //_row		
+	} //_row
 
 	: spacer {}
 
@@ -31,9 +31,9 @@ orientation : dialog
 
 // ***********************************************************************************************************************************
 
-interface : dialog 
+interface : dialog
 {
- 
+
 label = "Yoprint 2017";
 
 : spacer {height=1;}
@@ -92,7 +92,7 @@ label = "Yoprint 2017";
 	width = 30;
 	alignment = centered;
 	}
-}				
+}
 
 : spacer {height = 1;}
 
@@ -105,7 +105,7 @@ label = "Yoprint 2017";
 {
 	: column
 	{
-		: button	
+		: button
 		{
 		key = "layout";
 		label = "Exibir Layout";
@@ -113,7 +113,7 @@ label = "Yoprint 2017";
 		alignment = centered;
 		}
 
-		: button	
+		: button
 		{
 		key = "hidraulico";
 		label = "Exibir Hidráulico";
@@ -121,7 +121,7 @@ label = "Yoprint 2017";
 		alignment = centered;
 		}
 
-		: button	
+		: button
 		{
 		key = "eletrico";
 		label = "Exibir Elétrico";
@@ -129,7 +129,7 @@ label = "Yoprint 2017";
 		alignment = centered;
 		}
 
-		: button	
+		: button
 		{
 		key = "luminotecnico";
 		label = "Exibir Luminotécnico";
@@ -137,7 +137,7 @@ label = "Yoprint 2017";
 		alignment = centered;
 		}
 
-		: button	
+		: button
 		{
 		key = "secoes";
 		label = "Exibir Seções";
@@ -148,7 +148,7 @@ label = "Yoprint 2017";
 
 	: column
 	{
-		: button	
+		: button
 		{
 		key = "forro";
 		label = "Exibir Forro";
@@ -156,7 +156,7 @@ label = "Yoprint 2017";
 		alignment = centered;
 		}
 
-		: button	
+		: button
 		{
 		key = "piso";
 		label = "Exibir Piso";
@@ -164,7 +164,7 @@ label = "Yoprint 2017";
 		alignment = centered;
 		}
 
-		: button	
+		: button
 		{
 		key = "arcondicionado";
 		label = "Exibir Ar-Condicionado";
@@ -172,7 +172,7 @@ label = "Yoprint 2017";
 		alignment = centered;
 		}
 
-		: button	
+		: button
 		{
 		key = "reexibir";
 		label = "REEXIBIR TUDO";
@@ -183,7 +183,7 @@ label = "Yoprint 2017";
 }
 
 : spacer {}
-	
+
 } //boxed column
 
 : spacer {height=1;}
@@ -194,25 +194,25 @@ label = "Yoprint 2017";
 
 	: spacer {}
 
-: row 
+: row
 {
 	: column
 	{
 		width = 20;
-		
+
 		: text
 		{
 		label = "Correção de cotas editadas.";
 		}
 
-		: button	
+		: button
 		{
 		key = "fixallcotas";
 		label = "Corrigir Todas as Cotas";
 		alignment = centered;
 		}
 
-		: button	
+		: button
 		{
 		key = "fixsomecotas";
 		label = "Corrigir Cotas Selecionadas";
@@ -232,17 +232,17 @@ label = "Yoprint 2017";
 		label = "Alteração de cor do Layout (Cinza/Colorido).";
 		}
 
-		: button	
+		: button
 		{
 		key = "changelayercolor";
 		label = "Acinzentar Layout";
 		alignment = centered;
 		}
 
-		: button	
+		: button
 		{
 		key = "changelayercolorback";
-		label = "Resetar Cores";
+		label = "Recolorir Layout";
 		alignment = centered;
 		}
 
@@ -256,20 +256,20 @@ label = "Yoprint 2017";
 
 		: text
 		{
-		label = "Listagems";
+		label = "Outros";
 		}
 
-//		: button	// Dedicado à rotina de fazer a listagem completa do bloco do ambiente
-//		{
-//		key = "listagemambiente";
-//		label = "(Em construção)";
-//		alignment = centered;
-//		}
+		: button
+		{
+		key = "beltb";
+		label = "Corrigir Bloco";
+		alignment = centered;
+		}
 
-		: button	
+		: button
 		{
 		key = "listagemindividual";
-		label = "Selecionar Blocos";
+		label = "Listagem";
 		alignment = centered;
 		}
 
@@ -290,7 +290,7 @@ label = "Yoprint 2017";
 		alignment = left;
 	}
 
-	: button	
+	: button
 	{
 	key = "cancel";
 	label = "Fechar";

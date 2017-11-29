@@ -55,7 +55,7 @@
 (action_tile "changelayercolor" "(done_dialog 13)")
 (action_tile "changelayercolorback" "(done_dialog 14)")
 
-(action_tile "listagemambiente" "(done_dialog 15)")
+(action_tile "beltb" "(done_dialog 17)")
 (action_tile "listagemindividual" "(done_dialog 16)")
 
 (setq main_flag (start_dialog))
@@ -81,7 +81,7 @@
    ((= main_flag 13) (changecolorstogrey))
    ((= main_flag 14) (changecolorsback))
 
-   ((= main_flag 15) (listagemambiente))
+   ((= main_flag 17) (beltb))
    ((= main_flag 16) (listagemindividual))
 )
 
@@ -775,7 +775,6 @@
 
 );_defun
 
-
 ; -------------------------------------------------
 ; DEFUN PARA CORRIGIR TODAS AS COTAS
 (defun fixallcotas ( / ss textString)
@@ -947,3 +946,65 @@
 
  ; ************************************************************************************************************************************************
  ; END LISTAGEM INDIVIDUAL
+ ; ************************************************************************************************************************************************
+ (defun beltb (/ *error* doc nametolist blkss inc blk lay blknames ent edata)
+
+   (defun *error* (errmsg)
+     (if (not (wcmatch errmsg "Function cancelled,quit / exit abort,console break"))
+       (princ (strcat "\nError: " errmsg))
+     ); if
+     (vla-endundomark doc)
+     (princ)
+   ); defun - *error*
+
+   (defun nametolist (blk / blkobj blkname); get Block name and put it into list of names
+     (if (= (logand (cdr (assoc 70 (entget blk))) 4) 0) ; not an Xref
+       (progn
+         (setq
+           blkobj (vlax-ename->vla-object blk)
+           blkname
+             (vlax-get-property blkobj
+               (if (vlax-property-available-p blkobj 'EffectiveName) 'EffectiveName 'Name)
+                 ; to work with older versions that don't have dynamic Blocks
+             ); ...get-property & blkname
+         ); setq
+         (if
+           (not (member blkname blknames)); name not already in list
+           (setq blknames (append blknames (list blkname))); then -- add to end of list
+         ); if
+       ); progn
+     ); if
+   ); defun -- nametolist
+
+   (setq doc (vla-get-activedocument (vlax-get-acad-object)))
+   (vla-startundomark doc); = Undo Begin
+
+   (if (setq blkss (ssget "_+.:S" '((0 . "INSERT")))); User selection of a Block/Minsert/Xref
+     (progn ; then
+       (setq
+         blk (ssname blkss 0); top-level Block insertion
+         lay (cdr (assoc 8 (entget blk))); Layer it's inserted on
+       ); setq
+       (nametolist blk); put it in blknames list
+       (while (setq blk (car blknames)); as long as there's another Block name in list
+         ;; done this way instead of via (repeat) or (foreach), so it can add nested Blocks' names to list
+         (setq ent (tblobjname "block" blk)); Block definition as entity
+         (while (setq ent (entnext ent)); then -- proceed through sub-entities in definition
+           (setq edata (entget ent)); entity data list
+           (if (member '(0 . "INSERT") edata) (nametolist ent)); if nested Block, add name to end of list
+           (entmod (subst (cons 8 lay) (assoc 8 edata) edata)); change to top-level Block's Layer
+         ); while -- sub-entities
+         (setq blknames (cdr blknames)); take first one off
+       ); while
+       (command "_.regen")
+     ); progn
+     (prompt "\nNo Block(s) selected.")
+   ); if [user selection]
+
+   (vla-endundomark doc); = Undo End
+   (princ)
+ ); DEFUN
+
+ ; ********************************************************************************************************************************************
+ ; END beltb
+ ; ********************************************************************************************************************************************
