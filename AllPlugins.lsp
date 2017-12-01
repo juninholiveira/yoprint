@@ -1,9 +1,9 @@
 (vl-load-com)
 
 ; IMPRESSORAS
-(setq pdfPlotter "DWG TO PDF.PC3")
-(setq a4Plotter "Brother DCP-7065DN Printer")
-(setq a3plotter "\\\\Pauladesk\\EPSON L1300 Series")
+(setq pdfPlotter "DWG TO PDF.PC3")                                              ; Impressora para PDF
+(setq a4Plotter "Brother DCP-7065DN Printer")                                   ; Impressora A4 Brother
+(setq a3plotter "\\\\Pauladesk\\EPSON L1300 Series")                            ; Impressora colorida A3 Epson
 
 ; PAPÉIS
 (setq a4fullbleed "ISO FULL BLEED A4 (297.00 x 210.00 MM)")
@@ -13,7 +13,27 @@
 ; CTB
 (setq ctb "ctb - paula e bruna.ctb")
 
+; BLOCOS DE FOLHA
+(setq a4-20 "A4-20")
+(setq a4-25 "A4-25")
+(setq a4-50 "A4-50")
+(setq a4-75 "A4-75")
+(setq a4-100 "A4-100")
+(setq a4-125 "A4-125")
 
+(setq a3-20 "A3-20")
+(setq a3-25 "A3-25")
+(setq a3-50 "A3-50")
+(setq a3-75 "A3-75")
+(setq a3-100 "A3-100")
+(setq a3-125 "A3-125")
+
+(setq a2-20 "A2-20")
+(setq a2-25 "A2-25")
+(setq a2-50 "A2-50")
+(setq a2-75 "A2-75")
+(setq a2-100 "A2-100")
+(setq a2-125 "A2-125")
 
 (setvar "BACKGROUNDPLOT" 2)	                                                    ;Aqui eu seto a variável do sistema pra PLOT em foreground e PUBLISH em background (Número 2)
 
@@ -117,9 +137,9 @@
   (setq p1 (getpoint "\nFaça a seleção das pranchas à serem impressas:"))
   (setq p2 (getcorner p1))
 
-  (setq nomeescolhido(getstring "\nDigite um nome para as pranchas:"))
+  (setq nomeescolhido(GetString T "\nDigite um nome para as pranchas:"))
 
-    (if (setq ss (ssget "_C" p1 p2 '((0 . "INSERT") (2 . "A4-25,A4-50,A4-75,A4-100,A4-125"))))
+    (if (setq ss (ssget "_C" p1 p2 '((0 . "INSERT") (2 . "A4-20,A4-25,A4-50,A4-75,A4-100,A4-125"))))
         (progn
             (repeat (setq i (sslength ss))
                 (setq hnd (ssname ss (setq i (1- i)))
@@ -133,7 +153,10 @@
             (foreach x lst
               ;Pego o nome do bloco (A4025, A4-50, etc)
               (setq entityname (vla-get-effectivename (vlax-ename->vla-object (cdr x))))
-
+              (if
+                (= entityname "A4-20")
+                (setq escala "1=2")
+              )
               (if
                 (= entityname "A4-25")
                 (setq escala "1=2.5")
@@ -192,7 +215,7 @@
                          "yes"
                          (car x)
                          pdfplotter
-                         "ISO FULL BLEED A4 (297.00 x 210.00 MM)"
+                         a4fullbleed
                          "Millimeters"
                          "Landscape"
                          "No"
@@ -415,7 +438,7 @@
 (setq p1 (getpoint "\nFaça a seleção das pranchas à serem impressas:"))
 (setq p2 (getcorner p1))
 
-(if (setq ss (ssget "_C" p1 p2 '((0 . "INSERT") (2 . "A4-25,A4-50,A4-75,A4-100,A4-125,A3-25,A3-50,A3-75,A3-100,A3-125,A2-25,A2-50,A2-75,A2-100,A2-125"))))
+(if (setq ss (ssget "_C" p1 p2 '((0 . "INSERT") (2 . "A4-20,A4-25,A4-50,A4-75,A4-100,A4-125,A3-25,A3-50,A3-75,A3-100,A3-125,A2-25,A2-50,A2-75,A2-100,A2-125"))))
     (progn
         (repeat (setq i (sslength ss))
             (setq hnd (ssname ss (setq i (1- i)))
@@ -430,6 +453,14 @@
 
         (setq entityname (vla-get-effectivename (vlax-ename->vla-object (cdr x))))
 
+        (if
+          (= entityname "A4-20")
+          (progn
+            (setq papersize "A4")
+            (setq escala "1=2")
+            (setq plotter a4Plotter)
+          )
+        )
           (if
             (= entityname "A4-25")
             (progn
@@ -780,7 +811,7 @@
 	);_progn
 
 	;ELSE
-	(prompt "\n** Nothing selected ** ")
+	(prompt "\n** Nada selecionado! ** ")
 );_if
 
 (princ)
@@ -818,7 +849,7 @@
 	);_progn
 
 	;ELSE
-	(prompt "\n** Nothing selected ** ")
+	(prompt "\n** Nada selecionado ** ")
 );_if
 
 (princ)
@@ -958,6 +989,8 @@
 
  ; ************************************************************************************************************************************************
  ; END LISTAGEM INDIVIDUAL
+ ; ************************************************************************************************************************************************
+ ; BELTB
  ; ************************************************************************************************************************************************
  (defun beltb (/ *error* doc nametolist blkss inc blk lay blknames ent edata)
 
