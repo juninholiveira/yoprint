@@ -134,12 +134,16 @@
 ;PRINTALLTOPDF ***************************************************************************************************************
 (defun printalltopdf (/ dwg file hnd i len llpt lst mn mx ss tab urpt subfolder cpath newpath currententity scale)
 
+;Aqui eu peço pro usuário qual orientação ele quer imprimir
+(initget "Landscape Portrait")
+(setq orientation (cond ( (getkword "\nChoose [Landscape/Portrait] <Landscape>: ") ) ( "Landscape" )))
+
   (setq p1 (getpoint "\nFaça a seleção das pranchas à serem impressas:"))
   (setq p2 (getcorner p1))
 
   (setq nomeescolhido(GetString T "\nDigite um nome para as pranchas:"))
 
-    (if (setq ss (ssget "_C" p1 p2 '((0 . "INSERT") (2 . "A4-20,A4-25,A4-50,A4-75,A4-100,A4-125"))))
+    (if (setq ss (ssget "_C" p1 p2 '((0 . "INSERT") (2 . "A4-20,A4-25,A4-50,A4-75,A4-100,A4-125,A3-25,A3-50,A3-75,A3-100,A3-125,A2-25,A2-50,A2-75,A2-100,A2-125"))))
         (progn
             (repeat (setq i (sslength ss))
                 (setq hnd (ssname ss (setq i (1- i)))
@@ -155,28 +159,120 @@
               (setq entityname (vla-get-effectivename (vlax-ename->vla-object (cdr x))))
               (if
                 (= entityname "A4-20")
-                (setq escala "1=2")
+                (progn
+                  (setq papersize a4fullbleed)
+                  (setq escala "1=2")
+                )
               )
-              (if
-                (= entityname "A4-25")
-                (setq escala "1=2.5")
-              )
-              (if
-                (= entityname "A4-50")
-                (setq escala "1=5")
-              )
-              (if
-                (= entityname "A4-75")
-                (setq escala "1=7.5")
-              )
-              (if
-                (= entityname "A4-100")
-                (setq escala "1=10")
-              )
-              (if
-                (= entityname "A4-125")
-                (setq escala "1=12.5")
-              )
+                (if
+                  (= entityname "A4-25")
+                  (progn
+                    (setq papersize a4fullbleed)
+                    (setq escala "1=2.5")
+                  )
+                )
+                (if
+                  (= entityname "A4-50")
+                  (progn
+                    (setq papersize a4fullbleed)
+                    (setq escala "1=5")
+                  )
+                )
+                (if
+                  (= entityname "A4-75")
+                  (progn
+                    (setq papersize a4fullbleed)
+                    (setq escala "1=7.5")
+                  )
+                )
+                (if
+                  (= entityname "A4-100")
+                  (progn
+                    (setq papersize a4fullbleed)
+                    (setq escala "1=10")
+                  )
+                )
+                (if
+                  (= entityname "A4-125")
+                  (progn
+                    (setq papersize a4fullbleed)
+                    (setq escala "1=12.5")
+                  )
+                )
+
+                ;A3
+                (if
+                  (= entityname "A3-25")
+                  (progn
+                    (setq papersize a3fullbleed)
+                    (setq escala "1=2.5")
+                  )
+                )
+                (if
+                  (= entityname "A3-50")
+                  (progn
+                    (setq papersize a3fullbleed)
+                    (setq escala "1=5")
+                  )
+                )
+                (if
+                  (= entityname "A3-75")
+                  (progn
+                    (setq papersize a3fullbleed)
+                    (setq escala "1=7.5")
+                  )
+                )
+                (if
+                  (= entityname "A3-100")
+                  (progn
+                    (setq papersize a3fullbleed)
+                    (setq escala "1=10")
+                  )
+                )
+                (if
+                  (= entityname "A3-125")
+                  (progn
+                    (setq papersize a3fullbleed)
+                    (setq escala "1=12.5")
+                  )
+                )
+
+                ;A2 com FitToPaper para sair na A3
+                (if
+                  (= entityname "A2-25")
+                  (progn
+                    (setq papersize a2fullbleed)
+                    (setq escala "1=2.5")
+                  )
+                )
+                (if
+                  (= entityname "A2-50")
+                  (progn
+                    (setq papersize a2fullbleed)
+                    (setq escala "1=5")
+                  )
+                )
+                (if
+                  (= entityname "A2-75")
+                  (progn
+                    (setq papersize a2fullbleed)
+                    (setq escala "1=7.5")
+                  )
+                )
+                (if
+                  (= entityname "A2-100")
+                  (progn
+                    (setq papersize a2fullbleed)
+                    (setq escala "1=10")
+                  )
+                )
+                (if
+                  (= entityname "A2-125")
+                  (progn
+                    (setq papersize a2fullbleed)
+                    (setq escala "1=12.5")
+                  )
+                )
 
 ;Faço a seleção da área da prancha
 (vla-getboundingbox (vlax-ename->vla-object (cdr x)) 'mn 'mx)
@@ -215,9 +311,9 @@
                          "yes"
                          (car x)
                          pdfplotter
-                         a4fullbleed
+                         papersize
                          "Millimeters"
-                         "Landscape"
+                         orientation
                          "No"
                          "Window"
                          llpt
