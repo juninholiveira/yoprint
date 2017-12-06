@@ -62,10 +62,7 @@
             (exit )
           );if
         ); progn
-
     );if
-
-
 
 ;CANCEL
 (action_tile "cancel" "(done_dialog)(exit)(princ)")
@@ -73,6 +70,38 @@
 (action_tile "printalltopdf" "(done_dialog 0)")
 (action_tile "printalla3" "(done_dialog 1)")
 (action_tile "printsinglesheet" "(done_dialog 2)")
+
+(set_tile "togglelayout" "1")
+(action_tile "togglelayout" "(setq plotLayout $value)")
+(setq plotLayout (get_tile "togglelayout"))
+
+(set_tile "togglehidraulico" "1")
+(action_tile "togglehidraulico" "(setq plotHidraulico $value)")
+(setq plotHidraulico (get_tile "togglehidraulico"))
+
+(set_tile "toggleeletrico" "1")
+(action_tile "toggleeletrico" "(setq plotEletrico $value)")
+(setq plotEletrico (get_tile "toggleeletrico"))
+
+(set_tile "toggleluminotecnico" "1")
+(action_tile "toggleluminotecnico" "(setq plotLuminotecnico $value)")
+(setq plotLuminotecnico (get_tile "toggleluminotecnico"))
+
+(set_tile "togglesecoes" "1")
+(action_tile "togglesecoes" "(setq plotSecoes $value)")
+(setq plotSecoes (get_tile "togglesecoes"))
+
+(set_tile "toggleforro" "1")
+(action_tile "toggleforro" "(setq plotForro $value)")
+(setq plotForro (get_tile "toggleforro"))
+
+(set_tile "togglepiso" "1")
+(action_tile "togglepiso" "(setq plotPiso $value)")
+(setq plotPiso (get_tile "togglepiso"))
+
+(set_tile "togglearcondicionado" "1")
+(action_tile "togglearcondicionado" "(setq plotArcondicionado $value)")
+(setq plotArcondicionado (get_tile "togglearcondicionado"))
 
 (action_tile "layout" "(done_dialog 3)")
 (action_tile "hidraulico" "(done_dialog 4)")
@@ -97,7 +126,19 @@
 
 (cond
    ((= main_flag 0) (printalltopdf))
-   ((= main_flag 1) (printalla3))
+   ((= main_flag 1)
+     (progn
+       (printalla3)
+       (setq plotLayout (get_tile "togglelayout"))
+       (setq plotHidraulico (get_tile "togglehidraulico"))
+       (setq plotEletrico (get_tile "toggleeletrico"))
+       (setq plotLuminotecnico (get_tile "toggleluminotecnico"))
+       (setq plotSecoes (get_tile "togglesecoes"))
+       (setq plotForro (get_tile "toggleforro"))
+       (setq plotPiso (get_tile "togglepiso"))
+       (setq plotArcondicionado (get_tile "togglearcondicionado"))
+     )
+   )
    ((= main_flag 2) (printsinglesheet))
 
    ((= main_flag 3) (layout))
@@ -374,12 +415,21 @@
 	    ;(setq plantanumber 1)
 
 			(setq count 0)
+      ;Verificação da necessidade de imprimir essa planta
+
 
 			(repeat 8
 
+        (setq PlotThis "0")
 
-				( progn
-
+        (if (= count 0) (if (= plotLayout "1")(setq PlotThis "1")))
+        (if (= count 1) (if (= plotHidraulico "1")(setq PlotThis "1")))
+        (if (= count 2) (if (= plotEletrico "1")(setq PlotThis "1")))
+        (if (= count 3) (if (= plotLuminotecnico "1")(setq PlotThis "1")))
+        (if (= count 4) (if (= plotSecoes "1")(setq PlotThis "1")))
+        (if (= count 5) (if (= plotForro "1")(setq PlotThis "1")))
+        (if (= count 6) (if (= plotPiso "1")(setq PlotThis "1")))
+        (if (= count 7) (if (= plotArcondicionado "1")(setq PlotThis "1")))
 
 				(if (= count 0) (setq none(layout)))
 				(if (= count 1) (setq none(hidraulico)))
@@ -436,12 +486,12 @@
 				(if (= blocksize "A2-100") (setq papersize a2fullbleed))
 				(if (= blocksize "A2-125") (setq papersize a2fullbleed))
 
-
+        (if (= PlotThis "1")
             (foreach x lst2
+
 
 ; ---------------
 ;Faço a seleção da área da prancha
-
 (vla-getboundingbox (vlax-ename->vla-object (cdr x)) 'mn 'mx)
                 (setq llpt (vlax-safearray->list mn)
                       urpt (vlax-safearray->list mx)
@@ -498,6 +548,7 @@
                          ""
                 )
 
+
                 (if (/= (car x) "Model")
                     (command "No" "No" file "no" "Yes")
                     (command
@@ -506,11 +557,11 @@
                         "Yes"
                     )
                 )
-
             ) ;foreach
-						) ;progn
 
-						;;Adiciono mais um na var COUNT pra lógica funcionar lá em cima
+            ) ;if
+
+            ;;Adiciono mais um na var COUNT pra lógica funcionar lá em cima
 						(setq count (1+ count))
 					) ;repeat
           (setq lst2 nil)

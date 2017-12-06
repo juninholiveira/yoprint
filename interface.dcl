@@ -66,6 +66,9 @@ label = "Yoprint 2017";
 	}
 
 	: spacer{}
+
+: boxed_column
+{
 	: text
 	{
 	label = "Imprime em PDF todas as Plantas Gerais encontradas:";
@@ -79,20 +82,84 @@ label = "Yoprint 2017";
 	alignment = centered;
 	}
 
-	: spacer{}
-	: text
+: row
+{
+	: column
 	{
-	label = "Imprime direto na impressora todas e quaisquer pranchas selecionadas:";
-	}
+		alignment = "Left";
 
-	: button
+		: toggle
+		{
+		key = "togglelayout";
+		label = "Layout";
+		}
+
+		: toggle
+		{
+		key = "togglehidraulico";
+		label = "Hidraulico";
+		}
+
+		: toggle
+		{
+		key = "toggleeletrico";
+		label = "Elétrico";
+		}
+
+		: toggle
+		{
+		key = "toggleluminotecnico";
+		label = "Luminotécnico";
+		}
+	}
+	: column
 	{
-	key = "printsinglesheet";
-	label = "Impressão Direta";
-	width = 30;
-	alignment = centered;
+		alignment = "Center";
+
+		: toggle
+		{
+		key = "togglesecoes";
+		label = "Seções";
+		}
+
+		: toggle
+		{
+		key = "toggleforro";
+		label = "Forro";
+		}
+
+		: toggle
+		{
+		key = "togglepiso";
+		label = "Piso";
+		}
+
+		: toggle
+		{
+		key = "togglearcondicionado";
+		label = "Ar-Condicionado";
+		}
 	}
 }
+} //boxed_column
+
+		: spacer{}
+		: spacer{}
+
+		: text
+		{
+		label = "Imprime direto na impressora todas e quaisquer pranchas selecionadas:";
+		}
+
+		: button
+		{
+		key = "printsinglesheet";
+		label = "Impressão Direta";
+		width = 30;
+		alignment = centered;
+		}
+	}
+
 
 : spacer {height = 1;}
 
