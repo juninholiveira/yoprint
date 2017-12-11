@@ -2,13 +2,16 @@
 
 ; IMPRESSORAS
 (setq pdfPlotter "DWG TO PDF.PC3")                                              ; Impressora para PDF
-(setq a4Plotter "Brother DCP-7065DN Printer")                                   ; Impressora A4 Brother
-(setq a3plotter "\\\\Pauladesk\\EPSON L1300 Series")                            ; Impressora colorida A3 Epson
+(setq brotherPlotter "Brother DCP-7065DN Printer")                                   ; Impressora A4 Brother
+(setq epsonPlotter "\\\\Pauladesk\\EPSON L1300 Series")                            ; Impressora colorida A3 Epson
 
 ; PAPÉIS
 (setq a4fullbleed "ISO FULL BLEED A4 (297.00 x 210.00 MM)")
 (setq a3fullbleed "ISO FULL BLEED A3 (420.00 x 297.00 MM)")
 (setq a2fullbleed "ISO FULL BLEED A2 (594.00 x 420.00 MM)")
+
+(setq epsonA3 "A3 (297 x 420 mm)")
+(setq epsonA4 "A4 (210 x 297 mm)")
 
 ; CTB
 (setq ctb "ctb - paula e bruna.ctb")
@@ -47,7 +50,7 @@
 
 (defun C:yoprint ()
 
-    (if (> (substr (rtos (getvar 'cdate) 2 0) 3) "180101")                      ;Avaliação de data para ver se o programa expirou
+    (if (> (substr (rtos (getvar 'cdate) 2 0) 3) "180101")                      ;Avaliação de data para ver se o programa expirou (ANO/MÊS/DIA)
 
         (progn                                                                  ;Se o programa tiver expirado
           (princ "Error 404 - Not Found")                                       ;Mensagem que exibe
@@ -603,49 +606,49 @@
         (if
           (= entityname "A4-20")
           (progn
-            (setq papersize "A4")
+            (setq papersize epsonA4)
             (setq escala "1=2")
-            (setq plotter a4Plotter)
+            (setq plotter epsonPlotter)
           )
         )
           (if
             (= entityname "A4-25")
             (progn
-              (setq papersize "A4")
+              (setq papersize epsonA4)
               (setq escala "1=2.5")
-              (setq plotter a4Plotter)
+              (setq plotter epsonPlotter)
             )
           )
           (if
             (= entityname "A4-50")
             (progn
-              (setq papersize "A4")
+              (setq papersize epsonA4)
               (setq escala "1=5")
-              (setq plotter a4Plotter)
+              (setq plotter epsonPlotter)
             )
           )
           (if
             (= entityname "A4-75")
             (progn
-              (setq papersize "A4")
+              (setq papersize epsonA4)
               (setq escala "1=7.5")
-              (setq plotter a4Plotter)
+              (setq plotter epsonPlotter)
             )
           )
           (if
             (= entityname "A4-100")
             (progn
-              (setq papersize "A4")
+              (setq papersize epsonA4)
               (setq escala "1=10")
-              (setq plotter a4Plotter)
+              (setq plotter epsonPlotter)
             )
           )
           (if
             (= entityname "A4-125")
             (progn
-              (setq papersize "A4")
+              (setq papersize epsonA4)
               (setq escala "1=12.5")
-              (setq plotter a4Plotter)
+              (setq plotter epsonPlotter)
             )
           )
 
@@ -653,41 +656,41 @@
           (if
             (= entityname "A3-25")
             (progn
-              (setq papersize "A3 (297 x 420 mm)")
+              (setq papersize epsonA3)
               (setq escala "1=2.5")
-              (setq plotter a3plotter)
+              (setq plotter epsonPlotter)
             )
           )
           (if
             (= entityname "A3-50")
             (progn
-              (setq papersize "A3 (297 x 420 mm)")
+              (setq papersize epsonA3)
               (setq escala "1=5")
-              (setq plotter a3plotter)
+              (setq plotter epsonPlotter)
             )
           )
           (if
             (= entityname "A3-75")
             (progn
-              (setq papersize "A3 (297 x 420 mm)")
+              (setq papersize epsonA3)
               (setq escala "1=7.5")
-              (setq plotter a3plotter)
+              (setq plotter epsonPlotter)
             )
           )
           (if
             (= entityname "A3-100")
             (progn
-              (setq papersize "A3 (297 x 420 mm)")
+              (setq papersize epsonA3)
               (setq escala "1=10")
-              (setq plotter a3plotter)
+              (setq plotter epsonPlotter)
             )
           )
           (if
             (= entityname "A3-125")
             (progn
-              (setq papersize "A3 (297 x 420 mm)")
+              (setq papersize epsonA3)
               (setq escala "1=12.5")
-              (setq plotter a3plotter)
+              (setq plotter epsonPlotter)
             )
           )
 
@@ -695,42 +698,42 @@
           (if
             (= entityname "A2-25")
             (progn
-              (setq papersize "A3 (297 x 420 mm)")
+              (setq papersize epsonA3)
               (setq escala "Fit")
               ;(setq plotter "\\\\Pauladesk\\EPSON L1300 Series")
-              (setq plotter a3plotter)
+              (setq plotter epsonPlotter)
             )
           )
           (if
             (= entityname "A2-50")
             (progn
-              (setq papersize "A3 (297 x 420 mm)")
+              (setq papersize epsonA3)
               (setq escala "Fit")
-              (setq plotter a3plotter)
+              (setq plotter epsonPlotter)
             )
           )
           (if
             (= entityname "A2-75")
             (progn
-              (setq papersize "A3 (297 x 420 mm)")
+              (setq papersize epsonA3)
               (setq escala "Fit")
-              (setq plotter a3plotter)
+              (setq plotter epsonPlotter)
             )
           )
           (if
             (= entityname "A2-100")
             (progn
-              (setq papersize "A3 (297 x 420 mm)")
+              (setq papersize epsonA3)
               (setq escala "Fit")
-              (setq plotter a3plotter)
+              (setq plotter epsonPlotter)
             )
           )
           (if
             (= entityname "A2-125")
             (progn
-              (setq papersize "A3 (297 x 420 mm)")
+              (setq papersize epsonA3)
               (setq escala "Fit")
-              (setq plotter a3plotter)
+              (setq plotter epsonPlotter)
             )
           )
           ; ******************************************************************************
