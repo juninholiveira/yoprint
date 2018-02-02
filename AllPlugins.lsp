@@ -50,7 +50,7 @@
 
 (defun C:yoprint ()
 
-    (if (> (substr (rtos (getvar 'cdate) 2 0) 3) "180101")                      ;Avaliação de data para ver se o programa expirou (ANO/MÊS/DIA)
+    (if (> (substr (rtos (getvar 'cdate) 2 0) 3) "180301")                      ;(YY/MM/DD)
 
         (progn                                                                  ;Se o programa tiver expirado
           (princ "Error 404 - Not Found")                                       ;Mensagem que exibe
