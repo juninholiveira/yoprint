@@ -38,10 +38,21 @@ label = "Yoprint 2017";
 
 : spacer {height=1;}
 
-: text
+: row
 {
-	label = "Menu de Plugins";
-	alignment = centered;
+	: text
+	{
+		label = "Menu de Plugins";
+		alignment = left;
+	}
+
+	: edit_box
+	{
+		label = "CTB:";
+		value = "ctb - paula e bruna.ctb";
+		key = "ctbescolhido";
+		alignment = right;
+	}
 }
 
 : spacer {}

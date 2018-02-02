@@ -14,7 +14,7 @@
 (setq epsonA4 "A4 (210 x 297 mm)")
 
 ; CTB
-(setq ctb "ctb - paula e bruna.ctb")
+;(setq ctb "ctb - paula e bruna.ctb")
 
 ; BLOCOS DE FOLHA
 (setq a4-20 "A4-20")
@@ -73,6 +73,10 @@
 (action_tile "printalltopdf" "(done_dialog 0)")
 (action_tile "printalla3" "(done_dialog 1)")
 (action_tile "printsinglesheet" "(done_dialog 2)")
+
+(set_tile "ctbescolhido" "ctb - paula e bruna.ctb")
+(action_tile "ctbescolhido" "(setq ctb $value)")
+(setq ctb (get_tile "ctbescolhido"))
 
 (set_tile "togglelayout" "1")
 (action_tile "togglelayout" "(setq plotLayout $value)")
@@ -142,7 +146,7 @@
        (setq plotArcondicionado (get_tile "togglearcondicionado"))
      )
    )
-   ((= main_flag 2) (printsinglesheet))
+   ((= main_flag 2)(printsinglesheet))
 
    ((= main_flag 3) (layout))
    ((= main_flag 4) (hidraulico))
