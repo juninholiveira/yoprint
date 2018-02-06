@@ -2,8 +2,8 @@
 
 ; IMPRESSORAS
 (setq pdfPlotter "DWG TO PDF.PC3")                                              ; Impressora para PDF
-(setq brotherPlotter "Brother DCP-7065DN Printer")                                   ; Impressora A4 Brother
-(setq epsonPlotter "\\\\Pauladesk\\EPSON L1300 Series")                            ; Impressora colorida A3 Epson
+(setq brotherPlotter "Brother DCP-7065DN Printer")                              ; Impressora A4 Brother
+(setq epsonPlotter "\\\\Pauladesk\\EPSON L1300 Series")                         ; Impressora colorida A3 Epson
 
 ; PAPÉIS
 (setq a4fullbleed "ISO FULL BLEED A4 (297.00 x 210.00 MM)")
@@ -12,9 +12,6 @@
 
 (setq epsonA3 "A3 (297 x 420 mm)")
 (setq epsonA4 "A4 (210 x 297 mm)")
-
-; CTB
-;(setq ctb "ctb - paula e bruna.ctb")
 
 ; BLOCOS DE FOLHA
 (setq a4-20 "A4-20")
@@ -48,7 +45,15 @@
 (strlen (getenv "ACAD"));DON'T GO OVER 800 OR BAD THINGS HAPPEN
 
 
-(defun C:yoprint ()
+(defun C:yoprint ( / *error* )
+
+(defun *error* ( msg )
+  (princ)
+  (if (not (member msg '("Function cancelled" "quit / exit abort")))
+      (princ (strcat "\nError: " msg))
+  )
+  (princ)
+)
 
     (if (> (substr (rtos (getvar 'cdate) 2 0) 3) "180301")                      ;(YY/MM/DD)
 
