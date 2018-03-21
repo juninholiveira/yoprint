@@ -55,7 +55,7 @@
   (princ)
 )
 
-    (if (> (substr (rtos (getvar 'cdate) 2 0) 3) "180301")                      ;(YY/MM/DD)
+    (if (> (substr (rtos (getvar 'cdate) 2 0) 3) "180401")                      ;(YY/MM/DD)
 
         (progn                                                                  ;Se o programa tiver expirado
           (princ "Error 404 - Not Found")                                       ;Mensagem que exibe
@@ -456,7 +456,7 @@
 				(if (= count 1) (setq none(changecolorstogrey)))
 				(if (= count 2) (setq none(changecolorstogrey)))
 				(if (= count 3) (setq none(changecolorstogrey)))
-				(if (= count 4) (setq none(changecolorsback)))
+				(if (= count 4) (setq none(changecolorstogrey)))
 				(if (= count 5) (setq none(changecolorsback)))
 				(if (= count 6) (setq none(changecolorsback)))
 				(if (= count 7) (setq none(changecolorstogrey)))
@@ -870,7 +870,7 @@
 	;Here I Thaw all layers before i Freeze each one in the List (separated by COMMA).
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
-	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+	(command "_.layer" "_freeze" "1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
 
 ) ;end defun
 
@@ -885,7 +885,7 @@
 	;Here I Thaw all layers before i Freeze each one in the List (separated by COMMA).
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
-	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico Cotas,5 Forro,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+	(command "_.layer" "_freeze" "1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico Cotas,5 Forro,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
 
 ) ;end defun
 
