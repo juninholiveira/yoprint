@@ -55,7 +55,7 @@
   (princ)
 )
 
-    (if (> (substr (rtos (getvar 'cdate) 2 0) 3) "180401")                      ;(YY/MM/DD)
+    (if (> (substr (rtos (getvar 'cdate) 2 0) 3) "180501")                      ;(YY/MM/DD)
 
         (progn                                                                  ;Se o programa tiver expirado
           (princ "Error 404 - Not Found")                                       ;Mensagem que exibe

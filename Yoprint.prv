@@ -1,4 +1,4 @@
-;;; Visual LISP make file [V1.0] Yoprint saved to:[C:/Users/Usuario/Desktop/Repositório] at:[3/21/18] 
+;;; Visual LISP make file [V1.0] Yoprint saved to:[L:/Plugins/Yoprint] at:[4/2/18] 
 (PRV-DEF (:target . "Yoprint.VLX")
 	 (:active-x . T)
 	 (:separate-namespace)
