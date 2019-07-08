@@ -412,15 +412,8 @@
 		       ss2
 		    )
 
-
-;Aqui eu peço pro usuário qual orientação ele quer imprimir
-(initget "Landscape Portrait")
-(setq orientation (cond ( (getkword "\nChoose [Landscape/Portrait] <Landscape>: ") ) ( "Landscape" )))
-
 (initget "A4-50 A4-75 A4-100 A4-125 A3-50 A3-75 A3-100 A3-125 A2-50 A2-75 A2-100 A2-125")
 (setq blocksize (cond ( (getkword "\nChoose [A4-50/A4-75/A4-100/A4-125/A3-50/A3-75/A3-100/A3-125/A2-50/A2-75/A2-100/A2-125] <A3-100>: ") ) ( "A3-100" )))
-
-
 
 
 (if (setq ss2 (ssget "_X" (list '(0 . "INSERT") (cons 2 blocksize))))
@@ -515,6 +508,18 @@
         (if (= PlotThis "1")
             (foreach x lst2
 
+            ;Nesta parte, faço a lógica para decidir se a planta é Landscape ou Portrait,
+            ;pegando o Bounding Box dela para fazer a matemática
+            (vla-GetBoundingBox (vlax-ename->vla-object (cdr x)) 'minExt 'maxExt)
+            (setq minExt (vlax-safearray->list minExt) maxExt (vlax-safearray->list maxExt))
+            (setq orientation "Landscape")
+            (if
+              (<
+                (- (nth 0 maxExt) (nth 0 minExt))
+                (- (nth 1 maxExt) (nth 1 minExt))
+              )
+              (setq orientation "Portrait")
+            )
 
 ; ---------------
 ;Faço a seleção da área da prancha
@@ -603,10 +608,6 @@
 ;PRINTSINGLESHEET ***************************************************************************************************************
 (defun printsinglesheet()
 
-;Pede a prancha para imprimir
-(initget "Landscape Portrait")
-(setq orientation (cond ( (getkword "\nChoose [Landscape/Portrait] <Landscape>: ") ) ( "Landscape" )))
-
 (initget "Servidor Rede")
 (setq tipoDoComputador (cond ( (getkword "\nChoose [Servidor/Rede] <Rede>: ") ) ( "Rede" )))
 
@@ -626,6 +627,19 @@
         (setq i 0)
 
         (foreach x lst
+
+        ;Nesta parte, faço a lógica para decidir se a planta é Landscape ou Portrait,
+        ;pegando o Bounding Box dela para fazer a matemática
+        (vla-GetBoundingBox (vlax-ename->vla-object (cdr x)) 'minExt 'maxExt)
+        (setq minExt (vlax-safearray->list minExt) maxExt (vlax-safearray->list maxExt))
+        (setq orientation "Landscape")
+        (if
+          (<
+            (- (nth 0 maxExt) (nth 0 minExt))
+            (- (nth 1 maxExt) (nth 1 minExt))
+          )
+          (setq orientation "Portrait")
+        )
 
         (setq entityname (vla-get-effectivename (vlax-ename->vla-object (cdr x))))
 
