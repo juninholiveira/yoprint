@@ -188,10 +188,6 @@
 ;PRINTALLTOPDF ***************************************************************************************************************
 (defun printalltopdf (/ dwg file hnd i len llpt lst mn mx ss tab urpt subfolder cpath newpath currententity scale)
 
-;Aqui eu peço pro usuário qual orientação ele quer imprimir
-(initget "Landscape Portrait")
-(setq orientation (cond ( (getkword "\nChoose [Landscape/Portrait] <Landscape>: ") ) ( "Landscape" )))
-
   (setq p1 (getpoint "\nFaça a seleção das pranchas à serem impressas:"))
   (setq p2 (getcorner p1))
 
@@ -209,6 +205,20 @@
             (setq i 0)
 
             (foreach x lst
+
+            ;Nesta parte, faço a lógica para decidir se a planta é Landscape ou Portrait,
+            ;pegando o Bounding Box dela para fazer a matemática
+            (vla-GetBoundingBox (vlax-ename->vla-object (cdr x)) 'minExt 'maxExt)
+            (setq minExt (vlax-safearray->list minExt) maxExt (vlax-safearray->list maxExt))
+            (setq orientation "Landscape")
+            (if
+              (<
+                (- (nth 0 maxExt) (nth 0 minExt))
+                (- (nth 1 maxExt) (nth 1 minExt))
+              )
+              (setq orientation "Portrait")
+            )
+
               ;Pego o nome do bloco (A4025, A4-50, etc)
               (setq entityname (vla-get-effectivename (vlax-ename->vla-object (cdr x))))
               (if
