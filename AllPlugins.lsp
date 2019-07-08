@@ -3,7 +3,8 @@
 ; IMPRESSORAS
 (setq pdfPlotter "DWG TO PDF.PC3")                                              ; Impressora para PDF
 (setq brotherPlotter "Brother DCP-7065DN Printer")                              ; Impressora A4 Brother
-(setq epsonPlotter "\\\\Pauladesk\\EPSON L1300 Series")                         ; Impressora colorida A3 Epson
+(setq A3PlotterRede "\\\\DESK-INTERIORES\\Canon G3010 series")                  ; Impressora colorida A3 Epson  BACKUP EPSON: \\\\Desk-interiores\\EPSON L1300 Series
+(setq A3PlotterServidor "Canon G3010 series")
 
 ; PAPÉIS
 (setq a4fullbleed "ISO FULL BLEED A4 (297.00 x 210.00 MM)")
@@ -11,7 +12,7 @@
 (setq a2fullbleed "ISO FULL BLEED A2 (594.00 x 420.00 MM)")
 
 (setq epsonA3 "A3 (297 x 420 mm)")
-(setq epsonA4 "A4 (210 x 297 mm)")
+(setq epsonA4 "A4")                                                             ; BACKUP da folha da Epson: "A4 (210 x 297 mm)"
 
 ; BLOCOS DE FOLHA
 (setq a4-20 "A4-20")
@@ -55,7 +56,7 @@
   (princ)
 )
 
-    (if (> (substr (rtos (getvar 'cdate) 2 0) 3) "180801")                      ;(YY/MM/DD)
+    (if (> (substr (rtos (getvar 'cdate) 2 0) 3) "190901")                      ;(YY/MM/DD)
 
         (progn                                                                  ;Se o programa tiver expirado
           (princ "Error 404 - Not Found")                                       ;Mensagem que exibe
@@ -596,6 +597,9 @@
 (initget "Landscape Portrait")
 (setq orientation (cond ( (getkword "\nChoose [Landscape/Portrait] <Landscape>: ") ) ( "Landscape" )))
 
+(initget "Servidor Rede")
+(setq tipoDoComputador (cond ( (getkword "\nChoose [Servidor/Rede] <Rede>: ") ) ( "Rede" )))
+
 ;Seleciona todas as pranchas
 (setq p1 (getpoint "\nFaça a seleção das pranchas à serem impressas:"))
 (setq p2 (getcorner p1))
@@ -620,7 +624,11 @@
           (progn
             (setq papersize epsonA4)
             (setq escala "1=2")
-            (setq plotter epsonPlotter)
+            (if
+              (= tipoDoComputador "Servidor")
+              (setq plotter A3PlotterServidor)
+              (setq plotter A3PlotterRede)
+            )
           )
         )
           (if
@@ -628,7 +636,11 @@
             (progn
               (setq papersize epsonA4)
               (setq escala "1=2.5")
-              (setq plotter epsonPlotter)
+              (if
+                (= tipoDoComputador "Servidor")
+                (setq plotter A3PlotterServidor)
+                (setq plotter A3PlotterRede)
+              )
             )
           )
           (if
@@ -636,7 +648,11 @@
             (progn
               (setq papersize epsonA4)
               (setq escala "1=5")
-              (setq plotter epsonPlotter)
+              (if
+                (= tipoDoComputador "Servidor")
+                (setq plotter A3PlotterServidor)
+                (setq plotter A3PlotterRede)
+              )
             )
           )
           (if
@@ -644,7 +660,11 @@
             (progn
               (setq papersize epsonA4)
               (setq escala "1=7.5")
-              (setq plotter epsonPlotter)
+              (if
+                (= tipoDoComputador "Servidor")
+                (setq plotter A3PlotterServidor)
+                (setq plotter A3PlotterRede)
+              )
             )
           )
           (if
@@ -652,7 +672,11 @@
             (progn
               (setq papersize epsonA4)
               (setq escala "1=10")
-              (setq plotter epsonPlotter)
+              (if
+                (= tipoDoComputador "Servidor")
+                (setq plotter A3PlotterServidor)
+                (setq plotter A3PlotterRede)
+              )
             )
           )
           (if
@@ -660,7 +684,11 @@
             (progn
               (setq papersize epsonA4)
               (setq escala "1=12.5")
-              (setq plotter epsonPlotter)
+              (if
+                (= tipoDoComputador "Servidor")
+                (setq plotter A3PlotterServidor)
+                (setq plotter A3PlotterRede)
+              )
             )
           )
 
@@ -670,7 +698,11 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "1=2.5")
-              (setq plotter epsonPlotter)
+              (if
+                (= tipoDoComputador "Servidor")
+                (setq plotter A3PlotterServidor)
+                (setq plotter A3PlotterRede)
+              )
             )
           )
           (if
@@ -678,7 +710,11 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "1=5")
-              (setq plotter epsonPlotter)
+              (if
+                (= tipoDoComputador "Servidor")
+                (setq plotter A3PlotterServidor)
+                (setq plotter A3PlotterRede)
+              )
             )
           )
           (if
@@ -686,7 +722,11 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "1=7.5")
-              (setq plotter epsonPlotter)
+              (if
+                (= tipoDoComputador "Servidor")
+                (setq plotter A3PlotterServidor)
+                (setq plotter A3PlotterRede)
+              )
             )
           )
           (if
@@ -694,7 +734,11 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "1=10")
-              (setq plotter epsonPlotter)
+              (if
+                (= tipoDoComputador "Servidor")
+                (setq plotter A3PlotterServidor)
+                (setq plotter A3PlotterRede)
+              )
             )
           )
           (if
@@ -702,7 +746,11 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "1=12.5")
-              (setq plotter epsonPlotter)
+              (if
+                (= tipoDoComputador "Servidor")
+                (setq plotter A3PlotterServidor)
+                (setq plotter A3PlotterRede)
+              )
             )
           )
 
@@ -712,8 +760,11 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "Fit")
-              ;(setq plotter "\\\\Pauladesk\\EPSON L1300 Series")
-              (setq plotter epsonPlotter)
+              (if
+                (= tipoDoComputador "Servidor")
+                (setq plotter A3PlotterServidor)
+                (setq plotter A3PlotterRede)
+              )
             )
           )
           (if
@@ -721,7 +772,11 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "Fit")
-              (setq plotter epsonPlotter)
+              (if
+                (= tipoDoComputador "Servidor")
+                (setq plotter A3PlotterServidor)
+                (setq plotter A3PlotterRede)
+              )
             )
           )
           (if
@@ -729,7 +784,11 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "Fit")
-              (setq plotter epsonPlotter)
+              (if
+                (= tipoDoComputador "Servidor")
+                (setq plotter A3PlotterServidor)
+                (setq plotter A3PlotterRede)
+              )
             )
           )
           (if
@@ -737,7 +796,11 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "Fit")
-              (setq plotter epsonPlotter)
+              (if
+                (= tipoDoComputador "Servidor")
+                (setq plotter A3PlotterServidor)
+                (setq plotter A3PlotterRede)
+              )
             )
           )
           (if
@@ -745,7 +808,11 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "Fit")
-              (setq plotter epsonPlotter)
+              (if
+                (= tipoDoComputador "Servidor")
+                (setq plotter A3PlotterServidor)
+                (setq plotter A3PlotterRede)
+              )
             )
           )
           ; ******************************************************************************
