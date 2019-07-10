@@ -608,8 +608,18 @@
 ;PRINTSINGLESHEET ***************************************************************************************************************
 (defun printsinglesheet()
 
-(initget "Servidor Rede")
-(setq tipoDoComputador (cond ( (getkword "\nChoose [Servidor/Rede] <Rede>: ") ) ( "Rede" )))
+;(initget "Servidor Rede")
+;(setq tipoDoComputador (cond ( (getkword "\nChoose [Servidor/Rede] <Rede>: ") ) ( "Rede" )))
+
+  ;LÓGICA PARA DECIDIR SE ESTÁ NO SERVIDOR OU NA REDE E ESCOLHER A IMPRESSORA CERTA
+  ;Pega todas as Plotters e armazena na lista "plottersList"
+  (setq ad (vla-get-activedocument (vlax-get-acad-object)))
+  (vla-RefreshPlotDeviceInfo (vla-get-activelayout ad))
+  (setq plottersList (vlax-safearray->list (vlax-variant-value (vla-getplotdevicenames (vla-item (vla-get-layouts ad) "Model")))))
+  (setq plotter A3PlotterRede)
+  (foreach a plottersList
+    (if (= a A3PlotterServidor) (setq plotter A3PlotterServidor))
+  );END foreach)
 
 ;Seleciona todas as pranchas
 (setq p1 (getpoint "\nFaça a seleção das pranchas à serem impressas:"))
@@ -648,11 +658,6 @@
           (progn
             (setq papersize epsonA4)
             (setq escala "1=2")
-            (if
-              (= tipoDoComputador "Servidor")
-              (setq plotter A3PlotterServidor)
-              (setq plotter A3PlotterRede)
-            )
           )
         )
           (if
@@ -660,11 +665,6 @@
             (progn
               (setq papersize epsonA4)
               (setq escala "1=2.5")
-              (if
-                (= tipoDoComputador "Servidor")
-                (setq plotter A3PlotterServidor)
-                (setq plotter A3PlotterRede)
-              )
             )
           )
           (if
@@ -672,11 +672,6 @@
             (progn
               (setq papersize epsonA4)
               (setq escala "1=5")
-              (if
-                (= tipoDoComputador "Servidor")
-                (setq plotter A3PlotterServidor)
-                (setq plotter A3PlotterRede)
-              )
             )
           )
           (if
@@ -684,11 +679,6 @@
             (progn
               (setq papersize epsonA4)
               (setq escala "1=7.5")
-              (if
-                (= tipoDoComputador "Servidor")
-                (setq plotter A3PlotterServidor)
-                (setq plotter A3PlotterRede)
-              )
             )
           )
           (if
@@ -696,11 +686,6 @@
             (progn
               (setq papersize epsonA4)
               (setq escala "1=10")
-              (if
-                (= tipoDoComputador "Servidor")
-                (setq plotter A3PlotterServidor)
-                (setq plotter A3PlotterRede)
-              )
             )
           )
           (if
@@ -708,11 +693,6 @@
             (progn
               (setq papersize epsonA4)
               (setq escala "1=12.5")
-              (if
-                (= tipoDoComputador "Servidor")
-                (setq plotter A3PlotterServidor)
-                (setq plotter A3PlotterRede)
-              )
             )
           )
 
@@ -722,11 +702,6 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "1=2.5")
-              (if
-                (= tipoDoComputador "Servidor")
-                (setq plotter A3PlotterServidor)
-                (setq plotter A3PlotterRede)
-              )
             )
           )
           (if
@@ -734,11 +709,6 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "1=5")
-              (if
-                (= tipoDoComputador "Servidor")
-                (setq plotter A3PlotterServidor)
-                (setq plotter A3PlotterRede)
-              )
             )
           )
           (if
@@ -746,11 +716,6 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "1=7.5")
-              (if
-                (= tipoDoComputador "Servidor")
-                (setq plotter A3PlotterServidor)
-                (setq plotter A3PlotterRede)
-              )
             )
           )
           (if
@@ -758,11 +723,6 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "1=10")
-              (if
-                (= tipoDoComputador "Servidor")
-                (setq plotter A3PlotterServidor)
-                (setq plotter A3PlotterRede)
-              )
             )
           )
           (if
@@ -770,11 +730,6 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "1=12.5")
-              (if
-                (= tipoDoComputador "Servidor")
-                (setq plotter A3PlotterServidor)
-                (setq plotter A3PlotterRede)
-              )
             )
           )
 
@@ -784,11 +739,6 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "Fit")
-              (if
-                (= tipoDoComputador "Servidor")
-                (setq plotter A3PlotterServidor)
-                (setq plotter A3PlotterRede)
-              )
             )
           )
           (if
@@ -796,11 +746,6 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "Fit")
-              (if
-                (= tipoDoComputador "Servidor")
-                (setq plotter A3PlotterServidor)
-                (setq plotter A3PlotterRede)
-              )
             )
           )
           (if
@@ -808,11 +753,6 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "Fit")
-              (if
-                (= tipoDoComputador "Servidor")
-                (setq plotter A3PlotterServidor)
-                (setq plotter A3PlotterRede)
-              )
             )
           )
           (if
@@ -820,11 +760,6 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "Fit")
-              (if
-                (= tipoDoComputador "Servidor")
-                (setq plotter A3PlotterServidor)
-                (setq plotter A3PlotterRede)
-              )
             )
           )
           (if
@@ -832,11 +767,6 @@
             (progn
               (setq papersize epsonA3)
               (setq escala "Fit")
-              (if
-                (= tipoDoComputador "Servidor")
-                (setq plotter A3PlotterServidor)
-                (setq plotter A3PlotterRede)
-              )
             )
           )
           ; ******************************************************************************
