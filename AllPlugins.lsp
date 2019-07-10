@@ -821,10 +821,6 @@
 
 ;FUNÇÕES DE SUPORTE ***************************************************************************************************************
 
-;COMANDOS QUE CHAMAM OS MÉTODOS DE TROCA
-;(defun c:ChangeLayerColor () (setq none (changecolorstogrey)))
-;(defun c:ChangeLayerColorBack () (setq none (changecolorsback)))
-
 ;MÉTODO PARA TROCAR COR DOS LAYOUTS PARA CINZA
 (defun changecolorstogrey()
 	(command "_.layer" "_thaw" "1 Layout 01,1 Layout 02,1 Layout 03" "")
@@ -838,206 +834,118 @@
 	(command "_.layer" "_color" 3 "1 Layout 03" "")
 )
 
-; MOSTRAR LAYOUT (Only shows Layout)
-
-;(defun c:mostrar_layout ()
-;(setq none (layout))
-;) ;end defun
-
+; MOSTRAR LAYOUT
 (defun layout ()
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
 	(command "_.layer" "_freeze" "2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico,4 Luminotécnico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Contorno,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
 )
 
-
-
-; MOSTRAR HIDRAULICO (Apenas hidráulico e layout)
-;(defun c:mostrar_hidraulico ()
-;(setq none (hidraulico))
-;) ;end defun
+; MOSTRAR HIDRAULICO
 (defun hidraulico ()
-
-	;Here I Thaw all layers before i Freeze each one in the List (separated by COMMA).
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
 	(command "_.layer" "_freeze" "1 Layout Cotas,1 Layout Texto,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico,4 Luminotécnico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Contorno,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+)
 
-) ;end defun
-
-
-
-; MOSTRAR ELÉTRICO (Apenas planta elétrica)
-;(defun c:mostrar_eletrico ()
-;(setq none (eletrico))
-;) ;end defun
+; MOSTRAR ELÉTRICO
 (defun eletrico ()
-
-	;Here I Thaw all layers before i Freeze each one in the List (separated by COMMA).
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
 	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,4 Luminotécnico,4 Luminotécnico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Contorno,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+)
 
-) ;end defun
-
-
-
-; MOSTRAR LUMINOTÉCNICO (Apenas planta luminotecnica (com seções) e Forro Contorno)
-;(defun c:mostrar_luminotecnico ()
-;(setq none (luminotecnico))
-;) ;end defun
 (defun luminotecnico ()
-
-	;Here I Thaw all layers before i Freeze each one in the List (separated by COMMA).
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
 	(command "_.layer" "_freeze" "1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+)
 
-) ;end defun
-
-
-
-; MOSTRAR SEÇÕES (Apenas planta seções e Forro Contorno)
-;(defun c:mostrar_secoes ()
-;(setq none (secoes))
-;) ;end defun
+; MOSTRAR SEÇÕES
 (defun secoes ()
-
-	;Here I Thaw all layers before i Freeze each one in the List (separated by COMMA).
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
-	(command "_.layer" "_freeze" "1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico Cotas,5 Forro,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico Cotas,5 Forro,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+)
 
-) ;end defun
-
-
-
-; MOSTRAR FORRO (Apenas planta de forro)
-;(defun c:mostrar_forro ()
-;(setq none (forro))
-;) ;end defun
+; MOSTRAR FORRO
 (defun forro ()
-
-	;Here I Thaw all layers before i Freeze each one in the List (separated by COMMA).
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
 	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico,4 Luminotécnico Cotas,4 Luminotécnico Seções,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+)
 
-) ;end defun
-
-
-
-; MOSTRAR PISO (Apenas planta de piso)
-;(defun c:mostrar_piso ()
-;	(setq none (piso))
-;) ;end defun
+; MOSTRAR PISO
 (defun piso ()
-
-	;Here I Thaw all layers before i Freeze each one in the List (separated by COMMA).
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
 	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico,4 Luminotécnico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Contorno,5 Forro Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+)
 
-) ;end defun
-
-
-
-; MOSTRAR ARCONDICIONADO (Apenas planta de ar condicionado)
-;(defun c:mostrar_arcondicionado ()
-;(setq none (arcondicionado))
-;) ;end defun
+; MOSTRAR ARCONDICIONADO
 (defun arcondicionado ()
-
-	;Here I Thaw all layers before i Freeze each one in the List (separated by COMMA).
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
 	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico,4 Luminotécnico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Contorno,5 Forro Cotas,6 Piso,6 Piso Cotas" "")
+)
 
-) ;end defun
-
+; REEXIBIR TUDO
 (defun reexibir ()
   (command "setvar" "clayer" "0")
   (command "_laythw")
 )
 
-(defun c:FixAllCotas () (fixallcotas))
-(defun c:FixSomeCotas () (fixSomeCotas))
-
-; -------------------------------------------------
 ; DEFUN PARA CORRIGIR SOMENTE AS COTAS SELECIONADAS
 (defun fixsomecotas ( / ss textString)
 
-(if
-	;PREDICATE
-	(and
-		(setq ss (ssget '((0 . "DIMENSION"))))
-		(setq textString "")
-	)
-
-	;THEN
-	(progn
-
-		(vla-startundomark
-			(cond
-				(*activeDoc*)
-				(
-					(setq *activeDoc* (vla-get-activedocument (vlax-get-acad-object)))
-				)
-			)
-		)
-		(vlax-for oDim
-			(setq ss (vla-get-activeselectionset *activeDoc*))
-			(vla-put-textoverride oDim textString)
-		)
-		(vla-delete ss)
-		(vla-endundomark *activeDoc*)
-	);_progn
-
-	;ELSE
-	(prompt "\n** Nada selecionado! ** ")
-);_if
-
-(princ)
-
+  (if
+  	(and (setq ss (ssget '((0 . "DIMENSION")))) (setq textString ""))
+    ;THEN
+  	(progn
+  		(vla-startundomark
+  			(cond
+  				(*activeDoc*)
+  				(
+  					(setq *activeDoc* (vla-get-activedocument (vlax-get-acad-object)))
+  				)
+  			)
+  		)
+  		(vlax-for oDim (setq ss (vla-get-activeselectionset *activeDoc*)) (vla-put-textoverride oDim textString))
+  		(vla-delete ss)
+  		(vla-endundomark *activeDoc*)
+  	);_progn
+  	;ELSE
+  	(prompt "\n** Nada selecionado! ** ")
+  );_if
+  (princ)
 );_defun
 
-; -------------------------------------------------
 ; DEFUN PARA CORRIGIR TODAS AS COTAS
 (defun fixallcotas ( / ss textString)
 
-(if
-	;PREDICATE
-	(and
-		(setq ss (ssget "x" '((0 . "DIMENSION"))))
-		(setq textString "")
-	)
-
-	;THEN
-	(progn
-
-		(vla-startundomark
-			(cond
-				(*activeDoc*)
-				(
-					(setq *activeDoc* (vla-get-activedocument (vlax-get-acad-object)))
-				)
-			)
-		)
-		(vlax-for oDim
-			(setq ss (vla-get-activeselectionset *activeDoc*))
-			(vla-put-textoverride oDim textString)
-		)
-		(vla-delete ss)
-		(vla-endundomark *activeDoc*)
-	);_progn
-
-	;ELSE
-	(prompt "\n** Nada selecionado ** ")
-);_if
-
-(princ)
-
+  (if
+  	;PREDICATE
+  	(and (setq ss (ssget "x" '((0 . "DIMENSION"))))(setq textString ""))
+  	;THEN
+  	(progn
+  		(vla-startundomark
+  			(cond
+  				(*activeDoc*)
+  				(
+  					(setq *activeDoc* (vla-get-activedocument (vlax-get-acad-object)))
+  				)
+  			)
+  		)
+  		(vlax-for oDim(setq ss (vla-get-activeselectionset *activeDoc*))(vla-put-textoverride oDim textString))
+  		(vla-delete ss)
+  		(vla-endundomark *activeDoc*)
+  	);_progn
+  	;ELSE
+  	(prompt "\n** Nada selecionado ** ")
+  );_if
+  (princ)
 );_defun
+
 
 ; ***********************************************************************************************************************************************
 ; LISTAGEM INDIVIDUAL
@@ -1173,7 +1081,7 @@
  ; ************************************************************************************************************************************************
  ; END LISTAGEM INDIVIDUAL
  ; ************************************************************************************************************************************************
- ; BELTB
+ ; BELTB (Corrigir o bloco para Layer 0)
  ; ************************************************************************************************************************************************
  (defun beltb (/ *error* doc nametolist blkss inc blk lay blknames ent edata)
 
