@@ -350,26 +350,12 @@
 		(setq subfolder "PDFs")
 		(setq cpath (getvar "dwgprefix"))
 		(Setq newpath (strcat cpath subfolder))
-		(if (not (findfile newpath))
-			(vl-mkdir newpath)
-		)
+		(if (not (findfile newpath))(vl-mkdir newpath))
 
-                (setq file (strcat newpath
-				   "\\"
-           nomeescolhido
-           " "
-				   (substr (setq ptx (rtos (cadr urpt) 2 0)) 1 5)
-				   " - "
-				   (substr (setq ptx (rtos (car urpt) 2 0)) 1 5)
-                                   ".pdf"
-                           )
-                )
+                (setq file (strcat newpath "\\" nomeescolhido " " (substr (setq ptx (rtos (cadr urpt) 2 0)) 1 5) " - " (substr (setq ptx (rtos (car urpt) 2 0)) 1 5) ".pdf"))
 
                 ;Deleto arquivos antigos
-                (if (findfile file)
-                    (vl-file-delete file)
-                )
-
+                (if (findfile file) (vl-file-delete file))
 
                 (command "-plot"
                          "yes"
@@ -412,8 +398,8 @@
 		       ss2
 		    )
 
-(initget "A4-50 A4-75 A4-100 A4-125 A3-50 A3-75 A3-100 A3-125 A2-50 A2-75 A2-100 A2-125")
-(setq blocksize (cond ( (getkword "\nChoose [A4-50/A4-75/A4-100/A4-125/A3-50/A3-75/A3-100/A3-125/A2-50/A2-75/A2-100/A2-125] <A3-100>: ") ) ( "A3-100" )))
+(initget "A4-25 A4-50 A4-75 A4-100 A4-125 A3-50 A3-75 A3-100 A3-125 A2-50 A2-75 A2-100 A2-125")
+(setq blocksize (cond ( (getkword "\nChoose [A4-25/A4-50/A4-75/A4-100/A4-125/A3-50/A3-75/A3-100/A3-125/A2-50/A2-75/A2-100/A2-125] <A3-100>: ") ) ( "A3-100" )))
 
 
 (if (setq ss2 (ssget "_X" (list '(0 . "INSERT") (cons 2 blocksize))))
@@ -476,6 +462,7 @@
 				(if (= count 7) (setq nomedaplanta "Ar Condicionado"))
 
 				(setq escala "Fit")
+        (if (= blocksize "A4-25") (setq escala "1=2.5"))
 				(if (= blocksize "A4-50") (setq escala "1=5"))
 				(if (= blocksize "A4-75") (setq escala "1=7.5"))
 				(if (= blocksize "A4-100") (setq escala "1=10"))
@@ -492,6 +479,7 @@
 				(if (= blocksize "A2-125") (setq escala "1=12.5"))
 
 				(setq papersize "Fit")
+        (if (= blocksize "A4-25") (setq papersize a4fullbleed))
 				(if (= blocksize "A4-50") (setq papersize a4fullbleed))
 				(if (= blocksize "A4-75") (setq papersize a4fullbleed))
 				(if (= blocksize "A4-100") (setq papersize a4fullbleed))
@@ -529,35 +517,18 @@
                       len  (distance llpt (list (car urpt) (cadr llpt)))
                 )
 ; ----------------
-; Aqui embaixo eu crio uma Subpasta, onde será salvo o Output
-; Var "SUBFOLDER" indica o nome da pasta a ser criada
 
-		(setq subfolder "Plantas Gerais")
-		(setq cpath (getvar "dwgprefix"))
-		(Setq newpath (strcat cpath subfolder))
-		(if (not (findfile newpath))
-			(vl-mkdir newpath)
-		)
+  ; Aqui embaixo eu crio uma Subpasta, onde será salvo o Output
+  ; Var "SUBFOLDER" indica o nome da pasta a ser criada
+  (setq subfolder "Plantas Gerais")
+  (setq cpath (getvar "dwgprefix"))
+  (Setq newpath (strcat cpath subfolder))
+  (if (not (findfile newpath))(vl-mkdir newpath))
 
+  (setq file (strcat newpath "\\" nomedaplanta " - " (substr (setq ptx (rtos (car urpt) 2 0)) 1 5) ".pdf"))
 
-
-                (setq file (strcat newpath
-				   "\\"
-				   nomedaplanta
-				   " - "
-				   (substr (setq ptx (rtos (car urpt) 2 0)) 1 5)
-				   ;(itoa plantanumber)
-                                   ".pdf"
-                           )
-                )
-
-		;(setq plantanumber (+ plantanumber 1))
-
-; ---------------
-;Deleto arquivos antigos
-                (if (findfile file)
-                    (vl-file-delete file)
-                )
+  ;Deleto arquivos antigos
+  (if (findfile file) (vl-file-delete file))
 
 ; ---------------
                 (command "-plot"
@@ -578,7 +549,6 @@
                          "yes"
                          ""
                 )
-
 
                 (if (/= (car x) "Model")
                     (command "No" "No" file "no" "Yes")
@@ -836,63 +806,82 @@
 
 ; MOSTRAR LAYOUT
 (defun layout ()
-	(command "setvar" "clayer" "0")
-	(command "_laythw")
+  (setq oldlayer (getvar "CLAYER")) ;Pega a layer atual
+	(command "setvar" "clayer" "0")   ;Seta a Layer Atual como Layer 0
+	(command "_laythw")               ;Exibe todas as layers para depois apagar as específicas
 	(command "_.layer" "_freeze" "2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico,4 Luminotécnico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Contorno,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+  (setvar "CLAYER" oldlayer)        ;Retorna a layer
 )
 
 ; MOSTRAR HIDRAULICO
 (defun hidraulico ()
+  (setq oldlayer (getvar "CLAYER"))
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
 	(command "_.layer" "_freeze" "1 Layout Cotas,1 Layout Texto,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico,4 Luminotécnico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Contorno,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+  (setvar "CLAYER" oldlayer)
 )
 
 ; MOSTRAR ELÉTRICO
 (defun eletrico ()
+  (setq oldlayer (getvar "CLAYER"))
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
 	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,4 Luminotécnico,4 Luminotécnico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Contorno,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+  (setvar "CLAYER" oldlayer)
 )
 
+;MOSTRAR LUMINOTÉCNICO
 (defun luminotecnico ()
+  (setq oldlayer (getvar "CLAYER"))
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
 	(command "_.layer" "_freeze" "1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+  (setvar "CLAYER" oldlayer)
 )
 
 ; MOSTRAR SEÇÕES
 (defun secoes ()
+  (setq oldlayer (getvar "CLAYER"))
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
 	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico Cotas,5 Forro,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+  (setvar "CLAYER" oldlayer)
 )
 
 ; MOSTRAR FORRO
 (defun forro ()
+  (setq oldlayer (getvar "CLAYER"))
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
 	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico,4 Luminotécnico Cotas,4 Luminotécnico Seções,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+  (setvar "CLAYER" oldlayer)
 )
 
 ; MOSTRAR PISO
 (defun piso ()
+  (setq oldlayer (getvar "CLAYER"))
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
 	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico,4 Luminotécnico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Contorno,5 Forro Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+  (setvar "CLAYER" oldlayer)
 )
 
 ; MOSTRAR ARCONDICIONADO
 (defun arcondicionado ()
+  (setq oldlayer (getvar "CLAYER"))
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
 	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico,4 Luminotécnico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Contorno,5 Forro Cotas,6 Piso,6 Piso Cotas" "")
+  (setvar "CLAYER" oldlayer)
 )
 
 ; REEXIBIR TUDO
 (defun reexibir ()
+  (setq oldlayer (getvar "CLAYER"))
   (command "setvar" "clayer" "0")
   (command "_laythw")
+  (setvar "CLAYER" oldlayer)
 )
 
 ; DEFUN PARA CORRIGIR SOMENTE AS COTAS SELECIONADAS
