@@ -3,8 +3,8 @@
 ; IMPRESSORAS
 (setq pdfPlotter "DWG TO PDF.PC3")                                              ; Impressora para PDF
 (setq brotherPlotter "Brother DCP-7065DN Printer")                              ; Impressora A4 Brother
-(setq A3PlotterRede "\\\\DESK-INTERIORES\\Canon G3010 series")                  ; Impressora colorida A3 Epson  BACKUP EPSON: \\\\Desk-interiores\\EPSON L1300 Series
-(setq A3PlotterServidor "Canon G3010 series")
+(setq A3PlotterRede "\\\\Desk-interiores\\EPSON L1300 Series")                  ; Impressora colorida A3 Epson  BACKUP EPSON: \\\\Desk-interiores\\EPSON L1300 Series
+(setq A3PlotterServidor "EPSON L1300 Series")
 
 ; PAPÉIS
 (setq a4fullbleed "ISO FULL BLEED A4 (297.00 x 210.00 MM)")
