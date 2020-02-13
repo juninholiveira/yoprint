@@ -1,18 +1,17 @@
 (vl-load-com)
 
 ; IMPRESSORAS
-(setq pdfPlotter "DWG TO PDF.PC3")                                              ; Impressora para PDF
-(setq brotherPlotter "Brother DCP-7065DN Printer")                              ; Impressora A4 Brother
-(setq A3PlotterRede "\\\\Desk-interiores\\EPSON L1300 Series")                  ; Impressora colorida A3 Epson  BACKUP EPSON: \\\\Desk-interiores\\EPSON L1300 Series
-(setq A3PlotterServidor "EPSON L1300 Series")
+(setq pdfPlotter "DWG TO PDF.PC3")                                              ; Impressora Virtual para PDF
+(setq physicalPlotterRedeA4 "\\\\arq1\\Canon G3010 Series")                     ; Impressora Física A4 em Rede
+(setq physicalPlotterServidorA4 "Canon G3010 Series")                           ; Impressora Física A4 em Servidor
 
 ; PAPÉIS
 (setq a4fullbleed "ISO FULL BLEED A4 (297.00 x 210.00 MM)")
 (setq a3fullbleed "ISO FULL BLEED A3 (420.00 x 297.00 MM)")
 (setq a2fullbleed "ISO FULL BLEED A2 (594.00 x 420.00 MM)")
 
-(setq epsonA3 "A3 (297 x 420 mm)")
-(setq epsonA4 "A4")                                                             ; BACKUP da folha da Epson: "A4 (210 x 297 mm)"
+(setq A3 "A3 (297 x 420 mm)")                                                   ; Folha A3 para impressora Epson A3
+(setq A4 "A4")                                                                  ; Folha A4 para impressora Canon A4
 
 ; BLOCOS DE FOLHA
 (setq a4-20 "A4-20")
@@ -38,9 +37,9 @@
 
 (setvar "BACKGROUNDPLOT" 2)	                                                    ;Aqui eu seto a variável do sistema pra PLOT em foreground e PUBLISH em background (Número 2)
 
-;Aui eu reseto os
+;Aqui eu reseto os
 (SETQ ORIGPATH (STRCAT (GETENV "ACAD")";"))
-(SETQ ONEPATH (STRCAT "R:\\INTERIORES\\1.Padrão\\Padrão PB - AutoCad\\Plugins\\PluginsToLoad;R:\\INTERIORES\\1.Padrão\\Padrão PB - AutoCad\\Hachuras"));ADD PATHS HERE, NOT TO MANY OR IT GETS CUT OFF
+(SETQ ONEPATH (STRCAT "I:\\INTERIORES\\1.Padrão\\Padrão PB - AutoCad\\Plugins\\PluginsToLoad;I:\\INTERIORES\\1.Padrão\\Padrão PB - AutoCad\\Hachuras"));ADD PATHS HERE, NOT TO MANY OR IT GETS CUT OFF
 (SETQ MYENV (STRCAT ORIGPATH ONEPATH))
 (SETENV "ACAD" MYENV)
 (strlen (getenv "ACAD"));DON'T GO OVER 800 OR BAD THINGS HAPPEN
@@ -578,18 +577,15 @@
 ;PRINTSINGLESHEET ***************************************************************************************************************
 (defun printsinglesheet()
 
-;(initget "Servidor Rede")
-;(setq tipoDoComputador (cond ( (getkword "\nChoose [Servidor/Rede] <Rede>: ") ) ( "Rede" )))
-
   ;LÓGICA PARA DECIDIR SE ESTÁ NO SERVIDOR OU NA REDE E ESCOLHER A IMPRESSORA CERTA
   ;Pega todas as Plotters e armazena na lista "plottersList"
   (setq ad (vla-get-activedocument (vlax-get-acad-object)))
   (vla-RefreshPlotDeviceInfo (vla-get-activelayout ad))
   (setq plottersList (vlax-safearray->list (vlax-variant-value (vla-getplotdevicenames (vla-item (vla-get-layouts ad) "Model")))))
-  (setq plotter A3PlotterRede)
+  (setq plotter physicalPlotterRedeA4)
   (foreach a plottersList
-    (if (= a A3PlotterServidor) (setq plotter A3PlotterServidor))
-  );END foreach)
+    (if (= a physicalPlotterServidorA4) (setq plotter physicalPlotterServidorA4))
+  );END foreach
 
 ;Seleciona todas as pranchas
 (setq p1 (getpoint "\nFaça a seleção das pranchas à serem impressas:"))
@@ -626,42 +622,42 @@
         (if
           (= entityname "A4-20")
           (progn
-            (setq papersize epsonA4)
+            (setq papersize A4)
             (setq escala "1=2")
           )
         )
           (if
             (= entityname "A4-25")
             (progn
-              (setq papersize epsonA4)
+              (setq papersize A4)
               (setq escala "1=2.5")
             )
           )
           (if
             (= entityname "A4-50")
             (progn
-              (setq papersize epsonA4)
+              (setq papersize A4)
               (setq escala "1=5")
             )
           )
           (if
             (= entityname "A4-75")
             (progn
-              (setq papersize epsonA4)
+              (setq papersize A4)
               (setq escala "1=7.5")
             )
           )
           (if
             (= entityname "A4-100")
             (progn
-              (setq papersize epsonA4)
+              (setq papersize A4)
               (setq escala "1=10")
             )
           )
           (if
             (= entityname "A4-125")
             (progn
-              (setq papersize epsonA4)
+              (setq papersize A4)
               (setq escala "1=12.5")
             )
           )
@@ -670,35 +666,35 @@
           (if
             (= entityname "A3-25")
             (progn
-              (setq papersize epsonA3)
+              (setq papersize A3)
               (setq escala "1=2.5")
             )
           )
           (if
             (= entityname "A3-50")
             (progn
-              (setq papersize epsonA3)
+              (setq papersize A3)
               (setq escala "1=5")
             )
           )
           (if
             (= entityname "A3-75")
             (progn
-              (setq papersize epsonA3)
+              (setq papersize A3)
               (setq escala "1=7.5")
             )
           )
           (if
             (= entityname "A3-100")
             (progn
-              (setq papersize epsonA3)
+              (setq papersize A3)
               (setq escala "1=10")
             )
           )
           (if
             (= entityname "A3-125")
             (progn
-              (setq papersize epsonA3)
+              (setq papersize A3)
               (setq escala "1=12.5")
             )
           )
@@ -707,35 +703,35 @@
           (if
             (= entityname "A2-25")
             (progn
-              (setq papersize epsonA3)
+              (setq papersize A3)
               (setq escala "Fit")
             )
           )
           (if
             (= entityname "A2-50")
             (progn
-              (setq papersize epsonA3)
+              (setq papersize A3)
               (setq escala "Fit")
             )
           )
           (if
             (= entityname "A2-75")
             (progn
-              (setq papersize epsonA3)
+              (setq papersize A3)
               (setq escala "Fit")
             )
           )
           (if
             (= entityname "A2-100")
             (progn
-              (setq papersize epsonA3)
+              (setq papersize A3)
               (setq escala "Fit")
             )
           )
           (if
             (= entityname "A2-125")
             (progn
-              (setq papersize epsonA3)
+              (setq papersize A3)
               (setq escala "Fit")
             )
           )
