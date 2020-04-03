@@ -2,10 +2,10 @@
 
 ; IMPRESSORAS
 (setq pdfPlotter "DWG TO PDF.PC3")                                              ; Impressora Virtual para PDF
-(setq physicalPlotterRedeA4 "\\\\arq1\\Canon G3010 Series")                     ; Impressora FÃ­sica A4 em Rede
-(setq physicalPlotterServidorA4 "Canon G3010 Series")                           ; Impressora FÃ­sica A4 em Servidor
+(setq physicalPlotterRedeA4 "\\\\arq1\\Canon G3010 Series")                     ; Impressora Física A4 em Rede
+(setq physicalPlotterServidorA4 "Canon G3010 Series")                           ; Impressora Física A4 em Servidor
 
-; PAPÃ‰IS
+; PAPÉIS
 (setq a4fullbleed "ISO FULL BLEED A4 (297.00 x 210.00 MM)")
 (setq a3fullbleed "ISO FULL BLEED A3 (420.00 x 297.00 MM)")
 (setq a2fullbleed "ISO FULL BLEED A2 (594.00 x 420.00 MM)")
@@ -35,11 +35,11 @@
 (setq a2-100 "A2-100")
 (setq a2-125 "A2-125")
 
-(setvar "BACKGROUNDPLOT" 2)	                                                    ;Aqui eu seto a variÃ¡vel do sistema pra PLOT em foreground e PUBLISH em background (NÃºmero 2)
+(setvar "BACKGROUNDPLOT" 2)	                                                    ;Aqui eu seto a variável do sistema pra PLOT em foreground e PUBLISH em background (Número 2)
 
 ;Aqui eu reseto os
 (SETQ ORIGPATH (STRCAT (GETENV "ACAD")";"))
-(SETQ ONEPATH (STRCAT "I:\\INTERIORES\\1.PadrÃ£o\\PadrÃ£o PB - AutoCad\\Plugins\\PluginsToLoad;I:\\INTERIORES\\1.PadrÃ£o\\PadrÃ£o PB - AutoCad\\Hachuras"));ADD PATHS HERE, NOT TO MANY OR IT GETS CUT OFF
+(SETQ ONEPATH (STRCAT "I:\\INTERIORES\\1.Padrão\\Padrão PB - AutoCad\\Plugins\\PluginsToLoad;I:\\INTERIORES\\1.Padrão\\Padrão PB - AutoCad\\Hachuras"));ADD PATHS HERE, NOT TO MANY OR IT GETS CUT OFF
 (SETQ MYENV (STRCAT ORIGPATH ONEPATH))
 (SETENV "ACAD" MYENV)
 (strlen (getenv "ACAD"));DON'T GO OVER 800 OR BAD THINGS HAPPEN
@@ -64,7 +64,7 @@
 
         ); progn
 
-        (progn                                                                  ;Se o programa NÃ£O tiver expirado
+        (progn                                                                  ;Se o programa NãO tiver expirado
           (setq dcl_id (load_dialog "interface.dcl"))
           (if (not (new_dialog "interface" dcl_id))
             (exit )
@@ -187,7 +187,7 @@
 ;PRINTALLTOPDF ***************************************************************************************************************
 (defun printalltopdf (/ dwg file hnd i len llpt lst mn mx ss tab urpt subfolder cpath newpath currententity scale)
 
-  (setq p1 (getpoint "\nFaÃ§a a seleÃ§Ã£o das pranchas Ã  serem impressas:"))
+  (setq p1 (getpoint "\nFaça a seleção das pranchas à serem impressas:"))
   (setq p2 (getcorner p1))
 
   (setq nomeescolhido(GetString T "\nDigite um nome para as pranchas:"))
@@ -205,8 +205,8 @@
 
             (foreach x lst
 
-            ;Nesta parte, faÃ§o a lÃ³gica para decidir se a planta Ã© Landscape ou Portrait,
-            ;pegando o Bounding Box dela para fazer a matemÃ¡tica
+            ;Nesta parte, faço a lógica para decidir se a planta é Landscape ou Portrait,
+            ;pegando o Bounding Box dela para fazer a matemática
             (vla-GetBoundingBox (vlax-ename->vla-object (cdr x)) 'minExt 'maxExt)
             (setq minExt (vlax-safearray->list minExt) maxExt (vlax-safearray->list maxExt))
             (setq orientation "Landscape")
@@ -337,14 +337,14 @@
                   )
                 )
 
-;FaÃ§o a seleÃ§Ã£o da Ã¡rea da prancha
+;Faço a seleção da área da prancha
 (vla-getboundingbox (vlax-ename->vla-object (cdr x)) 'mn 'mx)
                 (setq llpt (vlax-safearray->list mn)
                       urpt (vlax-safearray->list mx)
                       len  (distance llpt (list (car urpt) (cadr llpt)))
                 )
 
-; Aqui embaixo eu crio uma Subpasta, onde serÃ¡ salvo o Output
+; Aqui embaixo eu crio uma Subpasta, onde será salvo o Output
 ; Var "SUBFOLDER" indica o nome da pasta a ser criada
 		(setq subfolder "PDFs")
 		(setq cpath (getvar "dwgprefix"))
@@ -412,11 +412,11 @@
             (setq lst2 (vl-sort lst2 '(lambda (x y) (> (car x) (car y)))))
             (setq i 0)
 
-	    ;Crio uma variÃ¡vel para armazenar um numero que serÃ¡ usado dentro do FOREACH, e zerado quando sair
+	    ;Crio uma variável para armazenar um numero que será usado dentro do FOREACH, e zerado quando sair
 	    ;(setq plantanumber 1)
 
 			(setq count 0)
-      ;VerificaÃ§Ã£o da necessidade de imprimir essa planta
+      ;Verificação da necessidade de imprimir essa planta
 
 
 			(repeat 8
@@ -452,10 +452,10 @@
 
 				(setq nomedaplanta "error")
 				(if (= count 0) (setq nomedaplanta "Layout"))
-				(if (= count 1) (setq nomedaplanta "Hidrï¿½ulico"))
-				(if (= count 2) (setq nomedaplanta "Elï¿½trico"))
-				(if (= count 3) (setq nomedaplanta "Luminotï¿½cnico"))
-				(if (= count 4) (setq nomedaplanta "Seï¿½ï¿½es"))
+				(if (= count 1) (setq nomedaplanta "Hidrulico"))
+				(if (= count 2) (setq nomedaplanta "Eltrico"))
+				(if (= count 3) (setq nomedaplanta "Luminotcnico"))
+				(if (= count 4) (setq nomedaplanta "Sees"))
 				(if (= count 5) (setq nomedaplanta "Forro"))
 				(if (= count 6) (setq nomedaplanta "Piso"))
 				(if (= count 7) (setq nomedaplanta "Ar Condicionado"))
@@ -495,8 +495,8 @@
         (if (= PlotThis "1")
             (foreach x lst2
 
-            ;Nesta parte, faÃ§o a lÃ³gica para decidir se a planta Ã© Landscape ou Portrait,
-            ;pegando o Bounding Box dela para fazer a matemÃ¡tica
+            ;Nesta parte, faço a lógica para decidir se a planta é Landscape ou Portrait,
+            ;pegando o Bounding Box dela para fazer a matemática
             (vla-GetBoundingBox (vlax-ename->vla-object (cdr x)) 'minExt 'maxExt)
             (setq minExt (vlax-safearray->list minExt) maxExt (vlax-safearray->list maxExt))
             (setq orientation "Landscape")
@@ -509,7 +509,7 @@
             )
 
 ; ---------------
-;FaÃ§o a seleÃ§Ã£o da Ã¡rea da prancha
+;Faço a seleção da área da prancha
 (vla-getboundingbox (vlax-ename->vla-object (cdr x)) 'mn 'mx)
                 (setq llpt (vlax-safearray->list mn)
                       urpt (vlax-safearray->list mx)
@@ -517,7 +517,7 @@
                 )
 ; ----------------
 
-  ; Aqui embaixo eu crio uma Subpasta, onde serÃ¡ salvo o Output
+  ; Aqui embaixo eu crio uma Subpasta, onde será salvo o Output
   ; Var "SUBFOLDER" indica o nome da pasta a ser criada
   (setq subfolder "Plantas Gerais")
   (setq cpath (getvar "dwgprefix"))
@@ -561,7 +561,7 @@
 
             ) ;if
 
-            ;;Adiciono mais um na var COUNT pra lÃ³gica funcionar lÃ¡ em cima
+            ;;Adiciono mais um na var COUNT pra lógica funcionar lá em cima
 						(setq count (1+ count))
 					) ;repeat
           (setq lst2 nil)
@@ -577,7 +577,7 @@
 ;PRINTSINGLESHEET ***************************************************************************************************************
 (defun printsinglesheet()
 
-  ;LÃ“GICA PARA DECIDIR SE ESTÃ NO SERVIDOR OU NA REDE E ESCOLHER A IMPRESSORA CERTA
+  ;LÓGICA PARA DECIDIR SE ESTÁ NO SERVIDOR OU NA REDE E ESCOLHER A IMPRESSORA CERTA
   ;Pega todas as Plotters e armazena na lista "plottersList"
   (setq ad (vla-get-activedocument (vlax-get-acad-object)))
   (vla-RefreshPlotDeviceInfo (vla-get-activelayout ad))
@@ -588,7 +588,7 @@
   );END foreach
 
 ;Seleciona todas as pranchas
-(setq p1 (getpoint "\nFaÃ§a a seleÃ§Ã£o das pranchas Ã  serem impressas:"))
+(setq p1 (getpoint "\nFaça a seleção das pranchas à serem impressas:"))
 (setq p2 (getcorner p1))
 
 (if (setq ss (ssget "_C" p1 p2 '((0 . "INSERT") (2 . "A4-20,A4-25,A4-50,A4-75,A4-100,A4-125,A3-25,A3-50,A3-75,A3-100,A3-125,A2-25,A2-50,A2-75,A2-100,A2-125"))))
@@ -604,8 +604,8 @@
 
         (foreach x lst
 
-        ;Nesta parte, faÃ§o a lÃ³gica para decidir se a planta Ã© Landscape ou Portrait,
-        ;pegando o Bounding Box dela para fazer a matemÃ¡tica
+        ;Nesta parte, faço a lógica para decidir se a planta é Landscape ou Portrait,
+        ;pegando o Bounding Box dela para fazer a matemática
         (vla-GetBoundingBox (vlax-ename->vla-object (cdr x)) 'minExt 'maxExt)
         (setq minExt (vlax-safearray->list minExt) maxExt (vlax-safearray->list maxExt))
         (setq orientation "Landscape")
@@ -785,15 +785,15 @@
 );defun
 ;PRINTSINGLESHEET ***************************************************************************************************************
 
-;FUNÃ‡Ã•ES DE SUPORTE ***************************************************************************************************************
+;FUNÇÕES DE SUPORTE ***************************************************************************************************************
 
-;MÃ‰TODO PARA TROCAR COR DOS LAYOUTS PARA CINZA
+;MÉTODO PARA TROCAR COR DOS LAYOUTS PARA CINZA
 (defun changecolorstogrey()
 	(command "_.layer" "_thaw" "1 Layout 01,1 Layout 02,1 Layout 03" "")
 	(command "_.layer" "_color" 252 "1 Layout 01,1 Layout 02,1 Layout 03" "")
 )
 
-;MÃ‰TODO PARA TROCAR COR DOS LAYOUTS DE VOLTA PARA VERMELHO E AMARELO
+;MÉTODO PARA TROCAR COR DOS LAYOUTS DE VOLTA PARA VERMELHO E AMARELO
 (defun changecolorsback()
 	(command "_.layer" "_color" 1 "1 Layout 01" "")
 	(command "_.layer" "_color" 2 "1 Layout 02" "")
@@ -804,8 +804,8 @@
 (defun layout ()
   (setq oldlayer (getvar "CLAYER")) ;Pega a layer atual
 	(command "setvar" "clayer" "0")   ;Seta a Layer Atual como Layer 0
-	(command "_laythw")               ;Exibe todas as layers para depois apagar as especÃ­ficas
-	(command "_.layer" "_freeze" "2 HidrÃ¡ulica,2 HidrÃ¡ulica Cotas,3 ElÃ©trico,3 ElÃ©trico Cotas,4 LuminotÃ©cnico,4 LuminotÃ©cnico Cotas,4 LuminotÃ©cnico SeÃ§Ãµes,5 Forro,5 Forro Contorno,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+	(command "_laythw")               ;Exibe todas as layers para depois apagar as específicas
+	(command "_.layer" "_freeze" "2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico,4 Luminotécnico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Contorno,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
   (setvar "CLAYER" oldlayer)        ;Retorna a layer
 )
 
@@ -814,34 +814,34 @@
   (setq oldlayer (getvar "CLAYER"))
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
-	(command "_.layer" "_freeze" "1 Layout Cotas,1 Layout Texto,3 ElÃ©trico,3 ElÃ©trico Cotas,4 LuminotÃ©cnico,4 LuminotÃ©cnico Cotas,4 LuminotÃ©cnico SeÃ§Ãµes,5 Forro,5 Forro Contorno,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+	(command "_.layer" "_freeze" "1 Layout Cotas,1 Layout Texto,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico,4 Luminotécnico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Contorno,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
   (setvar "CLAYER" oldlayer)
 )
 
-; MOSTRAR ELÃ‰TRICO
+; MOSTRAR ELÉTRICO
 (defun eletrico ()
   (setq oldlayer (getvar "CLAYER"))
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
-	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 HidrÃ¡ulica,2 HidrÃ¡ulica Cotas,4 LuminotÃ©cnico,4 LuminotÃ©cnico Cotas,4 LuminotÃ©cnico SeÃ§Ãµes,5 Forro,5 Forro Contorno,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,4 Luminotécnico,4 Luminotécnico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Contorno,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
   (setvar "CLAYER" oldlayer)
 )
 
-;MOSTRAR LUMINOTÃ‰CNICO
+;MOSTRAR LUMINOTÉCNICO
 (defun luminotecnico ()
   (setq oldlayer (getvar "CLAYER"))
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
-	(command "_.layer" "_freeze" "1 Layout Cotas,1 Layout Texto,2 HidrÃ¡ulica,2 HidrÃ¡ulica Cotas,3 ElÃ©trico,3 ElÃ©trico Cotas,4 LuminotÃ©cnico SeÃ§Ãµes,5 Forro,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+	(command "_.layer" "_freeze" "1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
   (setvar "CLAYER" oldlayer)
 )
 
-; MOSTRAR SEÃ‡Ã•ES
+; MOSTRAR SEÇÕES
 (defun secoes ()
   (setq oldlayer (getvar "CLAYER"))
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
-	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 HidrÃ¡ulica,2 HidrÃ¡ulica Cotas,3 ElÃ©trico,3 ElÃ©trico Cotas,4 LuminotÃ©cnico Cotas,5 Forro,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico Cotas,5 Forro,5 Forro Cotas,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
   (setvar "CLAYER" oldlayer)
 )
 
@@ -850,7 +850,7 @@
   (setq oldlayer (getvar "CLAYER"))
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
-	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 HidrÃ¡ulica,2 HidrÃ¡ulica Cotas,3 ElÃ©trico,3 ElÃ©trico Cotas,4 LuminotÃ©cnico,4 LuminotÃ©cnico Cotas,4 LuminotÃ©cnico SeÃ§Ãµes,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico,4 Luminotécnico Cotas,4 Luminotécnico Seções,6 Piso,6 Piso Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
   (setvar "CLAYER" oldlayer)
 )
 
@@ -859,7 +859,7 @@
   (setq oldlayer (getvar "CLAYER"))
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
-	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 HidrÃ¡ulica,2 HidrÃ¡ulica Cotas,3 ElÃ©trico,3 ElÃ©trico Cotas,4 LuminotÃ©cnico,4 LuminotÃ©cnico Cotas,4 LuminotÃ©cnico SeÃ§Ãµes,5 Forro,5 Forro Contorno,5 Forro Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
+	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico,4 Luminotécnico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Contorno,5 Forro Cotas,7 Ar Condicionado,7 Ar Condicionado Cotas" "")
   (setvar "CLAYER" oldlayer)
 )
 
@@ -868,7 +868,7 @@
   (setq oldlayer (getvar "CLAYER"))
 	(command "setvar" "clayer" "0")
 	(command "_laythw")
-	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 HidrÃ¡ulica,2 HidrÃ¡ulica Cotas,3 ElÃ©trico,3 ElÃ©trico Cotas,4 LuminotÃ©cnico,4 LuminotÃ©cnico Cotas,4 LuminotÃ©cnico SeÃ§Ãµes,5 Forro,5 Forro Contorno,5 Forro Cotas,6 Piso,6 Piso Cotas" "")
+	(command "_.layer" "_freeze" "1 Layout 01,1 Layout 02,1 Layout 03,1 Layout Cotas,1 Layout Texto,2 Hidráulica,2 Hidráulica Cotas,3 Elétrico,3 Elétrico Cotas,4 Luminotécnico,4 Luminotécnico Cotas,4 Luminotécnico Seções,5 Forro,5 Forro Contorno,5 Forro Cotas,6 Piso,6 Piso Cotas" "")
   (setvar "CLAYER" oldlayer)
 )
 
@@ -969,12 +969,12 @@
      (vla-get-Objectid obj)))
 
 
-;PROGRAMA COMEÃ‡A AQUI
- (if (setq ss (ssget (list (cons 0 "INSERT"))))                                 ;(SSGET pra fazer a seleÃ§Ã£o de blocos)
+;PROGRAMA COMEÇA AQUI
+ (if (setq ss (ssget (list (cons 0 "INSERT"))))                                 ;(SSGET pra fazer a seleção de blocos)
    (progn
      (vl-load-com)
      (setq i -1 len0 8)
-     (while (setq ent (ssname ss (setq i (1+ i))))                              ;(SSNAME retorna o nome do bloco, da lista SS, na posiÃ§Ã£o i)
+     (while (setq ent (ssname ss (setq i (1+ i))))                              ;(SSNAME retorna o nome do bloco, da lista SS, na posição i)
         (setq blk_name (cdr (assoc 2 (entget ent))))                            ;(Isso aqui deve pegar a string do nome certinho)
         (if (> (setq blk_len (strlen blk_name)) len0)
          (setq str blk_name len0 blk_len))
@@ -985,13 +985,13 @@
      );while
      (setq lst_blk (vl-sort lst_blk '(lambda (x y) (< (car x) (car y)))))
 
-     (setq Total 0)                                                             ;Cria a variÃ¡vel que armazenarÃ¡ a quantidade total de blocos
+     (setq Total 0)                                                             ;Cria a variável que armazenará a quantidade total de blocos
      (foreach I lst_blk (setq Total (+ Total (cdr I))))                         ;Acha a quantidade de blocos
 
      (or *h* (setq *h* (* (getvar "dimtxt")(getvar "dimscale"))))
      (initget 6)
 
-     (setq AmbienteName (GetString T "Digite o nome do ambiente:"))             ;Aqui eu peÃ§o o nome do ambiente
+     (setq AmbienteName (GetString T "Digite o nome do ambiente:"))             ;Aqui eu peço o nome do ambiente
 
     ;(setq h (getreal (strcat "\nText Height <" (rtos *h*) "> :")))             ;BACKUP do Input para altura do texto
      (setq h 10)                                                                ;Altura fixa do texto armazenada na var h
@@ -1019,12 +1019,12 @@
                 msp                     ;ModelSpace
                 (vlax-3d-point pt)      ;Passa o PT 2d pra 3d
                 (+ (length lst_blk) 2)  ;Pega a quantidade de blocos na lista e adiciona 3
-                2                       ;NÃºmero de colunas
+                2                       ;Número de colunas
                 height                  ;RowHeight
                 width                   ;ColWidth
               ) ;addtable
      );setq pt
-     (vla-put-regeneratetablesuppressed TblObj :vlax-true)                      ;Desativa regeneraÃ§Ã£o da tabela
+     (vla-put-regeneratetablesuppressed TblObj :vlax-true)                      ;Desativa regeneração da tabela
      (vla-SetColumnWidth TblObj 0 width1)                                       ;Altera o width da coluna 0
 
      (setq width2 400)
@@ -1036,18 +1036,18 @@
        (list acTitleRow acHeaderRow acDataRow))
      (mapcar '(lambda (x)(vla-setAlignment TblObj x 8))
        (list acTitleRow acHeaderRow acDataRow))
-     (vla-MergeCells TblObj 0 0 0 1)                                            ;Faz o Merge da cÃ©lula do tÃ­tulo (OBS.: o ultimo numero tem que bater com o numero de colunas -1)
-     (vla-setText TblObj 0 0 AmbienteName)                                      ;Coloca o nome do ambiente na cÃ©lula 0,0
-     (setq j -1 header_lsp (list "Qtd." "Item"))                                ;Defino uma lista de strings para o cabeÃ§Ã¡lio; A var J Ã© definida como -1 para o "Repeat" de baixo setar o J com +1 jÃ¡ no primeiro loop (resultando em um loop comeÃ§ando no 0 {coluna 0 = primeira coluna})
+     (vla-MergeCells TblObj 0 0 0 1)                                            ;Faz o Merge da célula do título (OBS.: o ultimo numero tem que bater com o numero de colunas -1)
+     (vla-setText TblObj 0 0 AmbienteName)                                      ;Coloca o nome do ambiente na célula 0,0
+     (setq j -1 header_lsp (list "Qtd." "Item"))                                ;Defino uma lista de strings para o cabeçálio; A var J é definida como -1 para o "Repeat" de baixo setar o J com +1 já no primeiro loop (resultando em um loop começando no 0 {coluna 0 = primeira coluna})
      (repeat (length header_lsp)                                                ;Repeat que pega a quantidade de strings como quantidade de de voltas
-      (vla-setText TblObj 1 (setq j (1+ j)) (nth j header_lsp)))                ;Seta o texto da Row 1, Coluna J {J = -1, jÃ¡ no prieiro loop vira 0}, com a string da var "header_lsp" na posiÃ§Ã£o J
+      (vla-setText TblObj 1 (setq j (1+ j)) (nth j header_lsp)))                ;Seta o texto da Row 1, Coluna J {J = -1, já no prieiro loop vira 0}, com a string da var "header_lsp" na posição J
 
-     (setq row 2 i 1)                                                           ;Aqui define a numeraÃ§Ã£o de ordem, comeÃ§ando na linha "2" pelo nÃºmero "1"
+     (setq row 2 i 1)                                                           ;Aqui define a numeração de ordem, começando na linha "2" pelo número "1"
      (foreach pt lst_blk
       (setq blk_name (car pt) j -1)
-      (mapcar '(lambda (x) (vla-setText TblObj row (setq j (1+ j)) x))          ;uso um Mapcar para aplicar as strings nas cÃ©lulas
-          (list (cdr pt) blk_name))                                             ;Aqui eu defino a ordem, primeiro o nÃºmero de quantidade (cdr pt) e depois o nome do bloco
-         ;(list i blk_name  (cdr pt)))                                          ;BACKUP => NÃºmero ordinal, Nome do Bloco, Quantidade
+      (mapcar '(lambda (x) (vla-setText TblObj row (setq j (1+ j)) x))          ;uso um Mapcar para aplicar as strings nas células
+          (list (cdr pt) blk_name))                                             ;Aqui eu defino a ordem, primeiro o número de quantidade (cdr pt) e depois o nome do bloco
+         ;(list i blk_name  (cdr pt)))                                          ;BACKUP => Número ordinal, Nome do Bloco, Quantidade
 
       (vla-SetCellAlignment TblObj row 0 2)                                     ;Alinhamento do texto
       (vla-SetCellAlignment TblObj row 1 1)
@@ -1055,9 +1055,9 @@
 
       );foreach
 
-      (setq row (- 1 row))                                                      ;Retiro 1 da var "row" para nÃ£o criar uma linha sobrando na tabela
+      (setq row (- 1 row))                                                      ;Retiro 1 da var "row" para não criar uma linha sobrando na tabela
 
-    (vla-put-regeneratetablesuppressed TblObj :vlax-false)                      ;Reativa a regeneraÃ§Ã£o da tabela
+    (vla-put-regeneratetablesuppressed TblObj :vlax-false)                      ;Reativa a regeneração da tabela
     (vlax-release-object TblObj)
     );progn
     );if
