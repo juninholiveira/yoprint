@@ -2,6 +2,11 @@
 
 ; API DOMAIN
 (setq apidomain "https://yoprint-backend.herokuapp.com/pb")
+;(setq apidomain "https://yoprint-backend.herokuapp.com/david")
+
+; CTB
+(setq ctb "ctb - paula e bruna.ctb")
+;(setq ctb "ctb - escritório.ctb")
 
 ; IMPRESSORAS
 (setq pdfPlotter "DWG TO PDF.PC3")                                              ; Impressora Virtual para PDF
@@ -126,7 +131,7 @@
 (action_tile "printalla3" "(done_dialog 1)")
 (action_tile "printsinglesheet" "(done_dialog 2)")
 
-(set_tile "ctbescolhido" "ctb - paula e bruna.ctb")
+(set_tile "ctbescolhido" ctb)
 (action_tile "ctbescolhido" "(setq ctb $value)")
 (setq ctb (get_tile "ctbescolhido"))
 

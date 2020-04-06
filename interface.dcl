@@ -49,7 +49,7 @@ label = "Yoprint 2017";
 	: edit_box
 	{
 		label = "CTB:";
-		value = "ctb - paula e bruna.ctb";
+		value = "ctb";
 		key = "ctbescolhido";
 		alignment = right;
 	}
@@ -57,7 +57,7 @@ label = "Yoprint 2017";
 
 : spacer {}
 
-//IMPRESSÕES
+//IMPRESSï¿½ES
 : boxed_column
 {
 	label = "Modo de Impressão";
