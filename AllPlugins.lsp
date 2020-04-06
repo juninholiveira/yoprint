@@ -1,5 +1,8 @@
 (vl-load-com)
 
+; API DOMAIN
+(setq apidomain "https://yoprint-backend.herokuapp.com/pb")
+
 ; IMPRESSORAS
 (setq pdfPlotter "DWG TO PDF.PC3")                                              ; Impressora Virtual para PDF
 (setq physicalPlotterRedeA4 "\\\\arq1\\Canon G3010 Series")                     ; Impressora Física A4 em Rede
@@ -45,6 +48,38 @@
 (strlen (getenv "ACAD"));DON'T GO OVER 800 OR BAD THINGS HAPPEN
 
 
+(defun GetFromWeb (strUrl / webObj stat res errobj)
+  ;Code posted by user: BazzaCAD, 2010/03/29, from site:
+  ;http://opendcl.com/forum/index.php?topic=1244.0
+  (vl-load-com)
+  ;; Set up variables
+  (setq webObj nil stat nil res nil)
+  ;; Create a new reference to the WinHttp object
+  (setq webObj (vlax-invoke-method (vlax-get-acad-object) 'GetInterfaceObject "WinHttp.WinHttpRequest.5.1"))
+  ;; Fetch web page
+  (vlax-invoke-method webObj 'Open "GET" strUrl :vlax-false)
+  (setq errobj (vl-catch-all-apply 'vlax-invoke-method (list webObj 'Send)))
+  (if (null (vl-catch-all-error-p errobj))
+    (progn
+      (setq stat (vlax-get-property webObj 'Status))
+      (if (= stat 200)
+        (progn
+          (setq res (vlax-get-property webObj 'ResponseText));_ Return the response value // 'ResponseText
+        )
+        (princ (strcat "\n!!! WEB server error: " (vlax-get-property webObj 'StatusText) "!!!"))
+      )
+    );_ progn
+    (princ (strcat "\n!!! WEB server error:\n" (vl-catch-all-error-message errobj)))
+  )
+  res 
+);defun
+
+(defun JSON->LIST (json / )
+;json - string, as json data
+;returns - list, converted from json
+(if (eq 'STR (type json)) (read (vl-string-translate "[]{}:," "()()  " json)))
+);defun
+
 (defun C:yoprint ( / *error* )
 
 (defun *error* ( msg )
@@ -55,22 +90,34 @@
   (princ)
 )
 
-    (if (> (substr (rtos (getvar 'cdate) 2 0) 3) "200601")                      ;(YY/MM/DD)
+    (setq url apidomain)
+    (if (and (setq data (GetFromWeb url))
+      (setq data (JSON->LIST data)))
+      (progn
 
-        (progn                                                                  ;Se o programa tiver expirado
-          (princ "Error 404 - Not Found")                                       ;Mensagem que exibe
-          (princ "\n")
-          (exit)                                                                ;Cancela toda a rotina
+        ; Comparo o resultado do JSON, se é igual a TRUE
+        (if (= (cadr data) "true")
 
-        ); progn
+          (progn                                                                  ;Se retornar TRUE no JSON, então libera
+            (setq dcl_id (load_dialog "interface.dcl"))
+            (if (not (new_dialog "interface" dcl_id))
+              (exit )
+            );if
+          ); progn
+                  
+          (progn                                                                  ;Se retornar FALSE, então dá erro
+            (princ "\nLicença expirada, contate o administrador.")                ;Mensagem que exibe
+            (princ "\n")
+            (exit)                                                                ;Cancela toda a rotina
+          ); progn
 
-        (progn                                                                  ;Se o programa NãO tiver expirado
-          (setq dcl_id (load_dialog "interface.dcl"))
-          (if (not (new_dialog "interface" dcl_id))
-            (exit )
-          );if
-        ); progn
+        )
+
+      );progn
+      ;else
+      (prompt "\nHouve um erro ao obter os dados do servidor.")
     );if
+    (princ)
 
 ;CANCEL
 (action_tile "cancel" "(done_dialog)(exit)(princ)")
