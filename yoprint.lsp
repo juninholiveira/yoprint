@@ -35,13 +35,6 @@
 
 (setvar "BACKGROUNDPLOT" 2)	                                                    ;Aqui eu seto a variável do sistema pra PLOT em foreground e PUBLISH em background (Número 2)
 
-;Aqui eu reseto os
-(SETQ ORIGPATH (STRCAT (GETENV "ACAD")";"))
-(SETQ ONEPATH (STRCAT "I:\\INTERIORES\\1.Padrão\\Padrão PB - AutoCad\\Plugins\\PluginsToLoad;I:\\INTERIORES\\1.Padrão\\Padrão PB - AutoCad\\Hachuras"));ADD PATHS HERE, NOT TO MANY OR IT GETS CUT OFF
-(SETQ MYENV (STRCAT ORIGPATH ONEPATH))
-(SETENV "ACAD" MYENV)
-(strlen (getenv "ACAD"));DON'T GO OVER 800 OR BAD THINGS HAPPEN
-
 ;PRINTALLTOPDF ***************************************************************************************************************
 (defun C:printalltopdf (/ dwg file hnd i len llpt lst mn mx ss tab urpt subfolder cpath newpath currententity scale)
 
