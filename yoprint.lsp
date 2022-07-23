@@ -383,14 +383,6 @@
 );defun
 ;PRINTALLTOPDF ***************************************************************************************************************
 
-; REEXIBIR TUDO
-(defun C:reexibirlayers ()
-  (setq oldlayer (getvar "CLAYER"))
-  (command "setvar" "clayer" "0")
-  (command "_laythw")
-  (setvar "CLAYER" oldlayer)
-)
-
 ; DEFUN PARA CORRIGIR SOMENTE AS COTAS SELECIONADAS
 (defun C:cotas_corrigirselecionadas ( / ss textString)
 
