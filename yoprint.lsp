@@ -384,7 +384,7 @@
 ;PRINTALLTOPDF ***************************************************************************************************************
 
 ; REEXIBIR TUDO
-(defun reexibir ()
+(defun C:reexibirlayers ()
   (setq oldlayer (getvar "CLAYER"))
   (command "setvar" "clayer" "0")
   (command "_laythw")
@@ -392,7 +392,7 @@
 )
 
 ; DEFUN PARA CORRIGIR SOMENTE AS COTAS SELECIONADAS
-(defun fixsomecotas ( / ss textString)
+(defun C:cotas_corrigirselecionadas ( / ss textString)
 
   (if
   	(and (setq ss (ssget '((0 . "DIMENSION")))) (setq textString ""))
@@ -417,7 +417,7 @@
 );_defun
 
 ; DEFUN PARA CORRIGIR TODAS AS COTAS
-(defun fixallcotas ( / ss textString)
+(defun C:cotas_corrigirtodas ( / ss textString)
 
   (if
   	;PREDICATE
