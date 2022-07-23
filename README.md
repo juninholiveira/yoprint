@@ -58,3 +58,20 @@ Antes de usar, desative a abertura automática dos PDFs impressos, ou então voc
 - Clique na segunda bolinha "Save changes to the following file:"
 - Clique em "OK"
 - Pronto, o AutoCAD não vai mais abrir os PDFs loucamente
+
+## Como o comando PRINTALLTOPDF funciona?
+
+Como o comando de impressão das plantas PDF consegue detectar as pranchas, e imprimi-las na escala correta, embora possam haver múltiplas pranchas de tamanhos diferentes?
+
+🪄 Será que é mágica?
+
+Claro que não. Cada prancha deve ter um bloco do AutoCAD ao seu redor, no tamanho correto, e com o nome correto, seguindo um padrão bem rígido:
+
+**{Tamanho do Papel}-{Escala}**
+
+Exemplos: "A4-25", "A3-100", "A4-50", etc.
+
+O plugin reconhece os tamanhos de papel de A4 até A2, e as escalas de 1/20 até 1/125. Ou seja, você consegue ir dos tamanhos A4-20 até A2-125.
+
+Mas não se preocupe com isso, isso já vai estar (ou deveria estar) já configurado no seu arquivo de template. Basta você usar as pranchas do seu template que já possuam esse bloco. E caso alguma prancha não esteja imprimindo, verifique se ela possui esse bloco no entorno.
+
