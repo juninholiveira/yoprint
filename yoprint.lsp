@@ -5,16 +5,11 @@
 
 ; IMPRESSORAS
 (setq pdfPlotter "DWG TO PDF.PC3")                                              ; Impressora Virtual para PDF
-(setq physicalPlotterRedeA4 "\\\\arq1\\Canon G3010 Series")                     ; Impressora Física A4 em Rede
-(setq physicalPlotterServidorA4 "Canon G3010 Series")                           ; Impressora Física A4 em Servidor
 
 ; PAPÉIS
 (setq a4fullbleed "ISO FULL BLEED A4 (297.00 x 210.00 MM)")
 (setq a3fullbleed "ISO FULL BLEED A3 (420.00 x 297.00 MM)")
 (setq a2fullbleed "ISO FULL BLEED A2 (594.00 x 420.00 MM)")
-
-(setq A3 "A3 (297 x 420 mm)")                                                   ; Folha A3 para impressora Epson A3
-(setq A4 "A4")                                                                  ; Folha A4 para impressora Canon A4
 
 ; BLOCOS DE FOLHA
 (setq a4-20 "A4-20")
@@ -46,135 +41,6 @@
 (SETQ MYENV (STRCAT ORIGPATH ONEPATH))
 (SETENV "ACAD" MYENV)
 (strlen (getenv "ACAD"));DON'T GO OVER 800 OR BAD THINGS HAPPEN
-
-(defun yoprint ( / *error* )
-
-	(defun *error* ( msg )
-	(princ)
-	(if (not (member msg '("Function cancelled" "quit / exit abort")))
-		(princ (strcat "\nError: " msg))
-	)
-	(princ)
-	)
-
-           (progn                                                                  ;Se retornar TRUE no JSON, então libera
-             (setq dcl_id (load_dialog "interface.dcl"))
-             (if (not (new_dialog "interface" dcl_id))
-               (exit )
-             );if
-           ); progn
-
-;CANCEL
-(action_tile "cancel" "(done_dialog)(exit)(princ)")
-
-(action_tile "printalltopdf" "(done_dialog 0)")
-(action_tile "printalla3" "(done_dialog 1)")
-(action_tile "printsinglesheet" "(done_dialog 2)")
-
-(set_tile "ctbescolhido" ctb)
-(action_tile "ctbescolhido" "(setq ctb $value)")
-(setq ctb (get_tile "ctbescolhido"))
-
-(set_tile "togglelayout" "1")
-(action_tile "togglelayout" "(setq plotLayout $value)")
-(setq plotLayout (get_tile "togglelayout"))
-
-(set_tile "togglehidraulico" "1")
-(action_tile "togglehidraulico" "(setq plotHidraulico $value)")
-(setq plotHidraulico (get_tile "togglehidraulico"))
-
-(set_tile "toggleeletrico" "1")
-(action_tile "toggleeletrico" "(setq plotEletrico $value)")
-(setq plotEletrico (get_tile "toggleeletrico"))
-
-(set_tile "toggleluminotecnico" "1")
-(action_tile "toggleluminotecnico" "(setq plotLuminotecnico $value)")
-(setq plotLuminotecnico (get_tile "toggleluminotecnico"))
-
-(set_tile "togglesecoes" "1")
-(action_tile "togglesecoes" "(setq plotSecoes $value)")
-(setq plotSecoes (get_tile "togglesecoes"))
-
-(set_tile "toggleforro" "1")
-(action_tile "toggleforro" "(setq plotForro $value)")
-(setq plotForro (get_tile "toggleforro"))
-
-(set_tile "togglepiso" "1")
-(action_tile "togglepiso" "(setq plotPiso $value)")
-(setq plotPiso (get_tile "togglepiso"))
-
-(set_tile "togglearcondicionado" "1")
-(action_tile "togglearcondicionado" "(setq plotArcondicionado $value)")
-(setq plotArcondicionado (get_tile "togglearcondicionado"))
-
-(action_tile "layout" "(done_dialog 3)")
-(action_tile "hidraulico" "(done_dialog 4)")
-(action_tile "eletrico" "(done_dialog 5)")
-(action_tile "luminotecnico" "(done_dialog 6)")
-(action_tile "secoes" "(done_dialog 15)")
-(action_tile "forro" "(done_dialog 7)")
-(action_tile "piso" "(done_dialog 8)")
-(action_tile "arcondicionado" "(done_dialog 9)")
-(action_tile "reexibir" "(done_dialog 10)")
-
-(action_tile "fixallcotas" "(done_dialog 11)")
-(action_tile "fixsomecotas" "(done_dialog 12)")
-
-(action_tile "changelayercolor" "(done_dialog 13)")
-(action_tile "changelayercolorback" "(done_dialog 14)")
-
-(action_tile "beltb" "(done_dialog 17)")
-(action_tile "listagemindividual" "(done_dialog 16)")
-
-(setq main_flag (start_dialog))
-
-(cond
-   ((= main_flag 0) (printalltopdf))
-   ((= main_flag 1)
-     (progn
-       (printalla3)
-       (setq plotLayout (get_tile "togglelayout"))
-       (setq plotHidraulico (get_tile "togglehidraulico"))
-       (setq plotEletrico (get_tile "toggleeletrico"))
-       (setq plotLuminotecnico (get_tile "toggleluminotecnico"))
-       (setq plotSecoes (get_tile "togglesecoes"))
-       (setq plotForro (get_tile "toggleforro"))
-       (setq plotPiso (get_tile "togglepiso"))
-       (setq plotArcondicionado (get_tile "togglearcondicionado"))
-     )
-   )
-   ((= main_flag 2)(printsinglesheet))
-
-   ((= main_flag 3) (layout))
-   ((= main_flag 4) (hidraulico))
-   ((= main_flag 5) (eletrico))
-   ((= main_flag 6) (luminotecnico))
-   ((= main_flag 15) (secoes))
-   ((= main_flag 7) (forro))
-   ((= main_flag 8) (piso))
-   ((= main_flag 9) (arcondicionado))
-   ((= main_flag 10) (reexibir))
-
-   ((= main_flag 11) (fixallcotas))
-   ((= main_flag 12) (fixsomecotas))
-
-   ((= main_flag 13) (changecolorstogrey))
-   ((= main_flag 14) (changecolorsback))
-
-   ((= main_flag 17) (beltb))
-   ((= main_flag 16) (listagemindividual))
-)
-
-
-;Start and unload the DCL
-(start_dialog)
-(unload_dialog dcl_id)
-
-(princ)
-
-);defun
-
-; ****************************************************************************************************************************
 
 ;PRINTALLTOPDF ***************************************************************************************************************
 (defun C:printalltopdf (/ dwg file hnd i len llpt lst mn mx ss tab urpt subfolder cpath newpath currententity scale)
