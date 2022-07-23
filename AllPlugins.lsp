@@ -1,7 +1,7 @@
 (vl-load-com)
 
 ; API DOMAIN
-(setq apidomain "https://yoprint-backend.herokuapp.com/pb")
+;(setq apidomain "https://yoprint-backend.herokuapp.com/pb")
 ;(setq apidomain "https://yoprint-backend.herokuapp.com/david")
 
 ; CTB
@@ -53,76 +53,76 @@
 (strlen (getenv "ACAD"));DON'T GO OVER 800 OR BAD THINGS HAPPEN
 
 
-(defun GetFromWeb (strUrl / webObj stat res errobj)
-  ;Code posted by user: BazzaCAD, 2010/03/29, from site:
-  ;http://opendcl.com/forum/index.php?topic=1244.0
-  (vl-load-com)
-  ;; Set up variables
-  (setq webObj nil stat nil res nil)
-  ;; Create a new reference to the WinHttp object
-  (setq webObj (vlax-invoke-method (vlax-get-acad-object) 'GetInterfaceObject "WinHttp.WinHttpRequest.5.1"))
-  ;; Fetch web page
-  (vlax-invoke-method webObj 'Open "GET" strUrl :vlax-false)
-  (setq errobj (vl-catch-all-apply 'vlax-invoke-method (list webObj 'Send)))
-  (if (null (vl-catch-all-error-p errobj))
-    (progn
-      (setq stat (vlax-get-property webObj 'Status))
-      (if (= stat 200)
-        (progn
-          (setq res (vlax-get-property webObj 'ResponseText));_ Return the response value // 'ResponseText
-        )
-        (princ (strcat "\n!!! WEB server error: " (vlax-get-property webObj 'StatusText) "!!!"))
-      )
-    );_ progn
-    (princ (strcat "\n!!! WEB server error:\n" (vl-catch-all-error-message errobj)))
-  )
-  res 
-);defun
+; (defun GetFromWeb (strUrl / webObj stat res errobj)
+;   ;Code posted by user: BazzaCAD, 2010/03/29, from site:
+;   ;http://opendcl.com/forum/index.php?topic=1244.0
+;   (vl-load-com)
+;   ;; Set up variables
+;   (setq webObj nil stat nil res nil)
+;   ;; Create a new reference to the WinHttp object
+;   (setq webObj (vlax-invoke-method (vlax-get-acad-object) 'GetInterfaceObject "WinHttp.WinHttpRequest.5.1"))
+;   ;; Fetch web page
+;   (vlax-invoke-method webObj 'Open "GET" strUrl :vlax-false)
+;   (setq errobj (vl-catch-all-apply 'vlax-invoke-method (list webObj 'Send)))
+;   (if (null (vl-catch-all-error-p errobj))
+;     (progn
+;       (setq stat (vlax-get-property webObj 'Status))
+;       (if (= stat 200)
+;         (progn
+;           (setq res (vlax-get-property webObj 'ResponseText));_ Return the response value // 'ResponseText
+;         )
+;         (princ (strcat "\n!!! WEB server error: " (vlax-get-property webObj 'StatusText) "!!!"))
+;       )
+;     );_ progn
+;     (princ (strcat "\n!!! WEB server error:\n" (vl-catch-all-error-message errobj)))
+;   )
+;   res
+; );defun
 
-(defun JSON->LIST (json / )
-;json - string, as json data
-;returns - list, converted from json
-(if (eq 'STR (type json)) (read (vl-string-translate "[]{}:," "()()  " json)))
-);defun
+; (defun JSON->LIST (json / )
+; ;json - string, as json data
+; ;returns - list, converted from json
+; (if (eq 'STR (type json)) (read (vl-string-translate "[]{}:," "()()  " json)))
+; );defun
 
-(defun C:yoprint ( / *error* )
+(defun yoprint ( / *error* )
 
-(defun *error* ( msg )
-  (princ)
-  (if (not (member msg '("Function cancelled" "quit / exit abort")))
-      (princ (strcat "\nError: " msg))
-  )
-  (princ)
-)
+	(defun *error* ( msg )
+	(princ)
+	(if (not (member msg '("Function cancelled" "quit / exit abort")))
+		(princ (strcat "\nError: " msg))
+	)
+	(princ)
+	)
 
-    (setq url apidomain)
-    (if (and (setq data (GetFromWeb url))
-      (setq data (JSON->LIST data)))
-      (progn
+    ; (setq url apidomain)
+    ; (if (and (setq data (GetFromWeb url))
+    ;   (setq data (JSON->LIST data)))
+    ;   (progn
 
-        ; Comparo o resultado do JSON, se é igual a TRUE
-        (if (= (cadr data) "true")
+    ;     ; Comparo o resultado do JSON, se é igual a TRUE
+    ;     (if (= (cadr data) "true")
 
-          (progn                                                                  ;Se retornar TRUE no JSON, então libera
-            (setq dcl_id (load_dialog "interface.dcl"))
-            (if (not (new_dialog "interface" dcl_id))
-              (exit )
-            );if
-          ); progn
-                  
-          (progn                                                                  ;Se retornar FALSE, então dá erro
-            (princ "\nLicença expirada, contate o administrador.")                ;Mensagem que exibe
-            (princ "\n")
-            (exit)                                                                ;Cancela toda a rotina
-          ); progn
+           (progn                                                                  ;Se retornar TRUE no JSON, então libera
+             (setq dcl_id (load_dialog "interface.dcl"))
+             (if (not (new_dialog "interface" dcl_id))
+               (exit )
+             );if
+           ); progn
 
-        )
+    ;       (progn                                                                  ;Se retornar FALSE, então dá erro
+    ;         (princ "\nLicença expirada, contate o administrador.")                ;Mensagem que exibe
+    ;         (princ "\n")
+    ;         (exit)                                                                ;Cancela toda a rotina
+    ;       ); progn
 
-      );progn
-      ;else
-      (prompt "\nHouve um erro ao obter os dados do servidor.")
-    );if
-    (princ)
+    ;     )
+
+    ;   );progn
+    ;   ;else
+    ;   (prompt "\nHouve um erro ao obter os dados do servidor.")
+    ; );if
+    ; (princ)
 
 ;CANCEL
 (action_tile "cancel" "(done_dialog)(exit)(princ)")
@@ -237,7 +237,7 @@
 ; ****************************************************************************************************************************
 
 ;PRINTALLTOPDF ***************************************************************************************************************
-(defun printalltopdf (/ dwg file hnd i len llpt lst mn mx ss tab urpt subfolder cpath newpath currententity scale)
+(defun C:printalltopdf (/ dwg file hnd i len llpt lst mn mx ss tab urpt subfolder cpath newpath currententity scale)
 
   (setq p1 (getpoint "\nFaça a seleção das pranchas à serem impressas:"))
   (setq p2 (getcorner p1))
