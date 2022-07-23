@@ -11,14 +11,12 @@ Plugin de impressão em pranchas no Model e outras utilidades para AutoCad. Este
 
 Observação: os recursos riscados na lista acima estavam presentes durante o período de desenvolvimento ativo do plugin e ápice do seu uso. No entanto, como são extremamente *hard-coded* (estamos falando de LISP, uma linguagem de programação arcaica, meu Deus...) e super específicas para os padrões daquele escritório, decidi removê-las para deixá-lo mais genérico e usável.
 
----
 ## Comandos:
 
 - `PRINTALLTOPDF` - Imprime todas as pranchas selecionadas *que possuam um bloco configurado*
 - `COTAS_CORRIGIRSELECIONADAS` - Reseta as cotas editas que você selecionar para o valor correto
 - `COTAS_CORRIGIRTODAS` - Reseta TODAS as cotas do arquivo para o valor correto. **CUIDADO**
 
----
 ## Instalar o Plugin
 
 Em cada computador que for usar o plugin, siga as seguintes instruções:
@@ -31,7 +29,6 @@ Em cada computador que for usar o plugin, siga as seguintes instruções:
 
 **ATENÇÃO**: É necessário estar presente um arquivo CTB com o exato nome: "ctb - yoprint.ctb" na pasta padrão do AutoCAD para esses arquivos. Pegue seu arquivo de CTB que você já usa com o padrão do seu escritório e renomeie ele com o nome mencionado, depois coloque na pasta do AutoCAD para CTBs. Dica: Digite o comando `STYLESMANAGER` que o AutoCAD vai abrir automaticamente essa pasta. Basta jogar seu arquivo ctb lá dentro (com o nome certo).
 
----
 ## Configurar para sempre carregar o plugin ao abrir o AutoCAD
 
 
@@ -45,7 +42,6 @@ Em cada computador que for usar o plugin, siga as seguintes instruções:
 - Clique em "Abrir"
 - Clique em "Close"
 
----
 ## Desativar abertura automática de PDFs no visualizador padrão
 
 Antes de usar, desative a abertura automática dos PDFs impressos, ou então você vai se deparar com centenas de PDFs sendo abertos instantâneamente no seu visualizador padrão (navegador, Acrobat Reader ou qualquer outro). Siga os seguintes passos para desativar (faça isso em cada computador):
