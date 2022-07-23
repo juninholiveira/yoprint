@@ -5,7 +5,7 @@
 ;(setq apidomain "https://yoprint-backend.herokuapp.com/david")
 
 ; CTB
-(setq ctb "ctb - paula e bruna.ctb")
+(setq ctb "ctb - yoprint.ctb")
 ;(setq ctb "ctb - escritório.ctb")
 
 ; IMPRESSORAS
