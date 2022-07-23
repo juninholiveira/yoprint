@@ -4,7 +4,7 @@ orientation : dialog
 
 	: text
 	{
-		label = "Escolha a orientação das pranchas:";
+		label = "Escolha a orientaÃ§Ã£o das pranchas:";
 	}
 
 	: spacer {}
@@ -57,10 +57,10 @@ label = "Yoprint 2017";
 
 : spacer {}
 
-//IMPRESSï¿½ES
+//IMPRESSÃ¯Â¿Â½ES
 : boxed_column
 {
-	label = "Modo de Impressão";
+	label = "Modo de ImpressÃ£o";
 
 	: spacer{}
 	: text
@@ -114,13 +114,13 @@ label = "Yoprint 2017";
 		: toggle
 		{
 		key = "toggleeletrico";
-		label = "Elétrico";
+		label = "ElÃ©trico";
 		}
 
 		: toggle
 		{
 		key = "toggleluminotecnico";
-		label = "Luminotécnico";
+		label = "LuminotÃ©cnico";
 		}
 	}
 	: column
@@ -130,7 +130,7 @@ label = "Yoprint 2017";
 		: toggle
 		{
 		key = "togglesecoes";
-		label = "Seções";
+		label = "SeÃ§Ãµes";
 		}
 
 		: toggle
@@ -165,7 +165,7 @@ label = "Yoprint 2017";
 		: button
 		{
 		key = "printsinglesheet";
-		label = "Impressão Direta";
+		label = "ImpressÃ£o Direta";
 		width = 30;
 		alignment = centered;
 		}
@@ -177,7 +177,7 @@ label = "Yoprint 2017";
 //MOSTRAR
 :boxed_column
 {
-	label = "Modos de Exibição";
+	label = "Modos de ExibiÃ§Ã£o";
 
 : row
 {
@@ -194,7 +194,7 @@ label = "Yoprint 2017";
 		: button
 		{
 		key = "hidraulico";
-		label = "Exibir Hidráulico";
+		label = "Exibir HidrÃ¡ulico";
 		width = 30;
 		alignment = centered;
 		}
@@ -202,7 +202,7 @@ label = "Yoprint 2017";
 		: button
 		{
 		key = "eletrico";
-		label = "Exibir Elétrico";
+		label = "Exibir ElÃ©trico";
 		width = 30;
 		alignment = centered;
 		}
@@ -210,7 +210,7 @@ label = "Yoprint 2017";
 		: button
 		{
 		key = "luminotecnico";
-		label = "Exibir Luminotécnico";
+		label = "Exibir LuminotÃ©cnico";
 		width = 30;
 		alignment = centered;
 		}
@@ -218,7 +218,7 @@ label = "Yoprint 2017";
 		: button
 		{
 		key = "secoes";
-		label = "Exibir Seções";
+		label = "Exibir SeÃ§Ãµes";
 		width = 30;
 		alignment = centered;
 		}
@@ -280,7 +280,7 @@ label = "Yoprint 2017";
 
 		: text
 		{
-		label = "Correção de cotas editadas.";
+		label = "CorreÃ§Ã£o de cotas editadas.";
 		}
 
 		: button
@@ -307,7 +307,7 @@ label = "Yoprint 2017";
 
 		: text
 		{
-		label = "Alteração de cor do Layout (Cinza/Colorido).";
+		label = "AlteraÃ§Ã£o de cor do Layout (Cinza/Colorido).";
 		}
 
 		: button
@@ -364,7 +364,7 @@ label = "Yoprint 2017";
 
 	: text
 	{
-		label = "Criado por Leandro José de Oliveira Júnior";
+		label = "Criado por Leandro JosÃ© de Oliveira JÃºnior";
 		alignment = left;
 	}
 

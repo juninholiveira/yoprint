@@ -1,4 +1,4 @@
-; Plugin para altrar as cotas e as legendas de uma vez através do comando
+; Plugin para altrar as cotas e as legendas de uma vez atravÃ©s do comando
 
 (defun C:20 ()
     (command "-dimstyle" "restore" "COTAS_1-20")
