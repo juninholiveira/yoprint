@@ -1,23 +1,51 @@
 # Yoprint
-Plugin de impressão em pranchas no Model e outras utilidades para AutoCad. Este plugin foi feito sob medida para o escritório de arquitetura que trabalho com as seguintes features:
+Plugin de impressão em pranchas no Model e outras utilidades para AutoCad. Este plugin foi um experimento de uma solução in-house feito para atender as demandas do escritório de arquitetura em que eu trabalhava. Possui os seguintes recursos:
 
 - Impressão de múltiplas pranchas PDF no Model do AutoCAD
-- Impressão de Plantas Gerais no Model
-- Impressão direta para a impressora com configuração automática
-- Mudança de template de layers no AutoCAD
-- Colorir e Descolorir layer de Layout
 - Corrigir cotas editadas
+- ~~Impressão de Plantas Gerais no Model~~
+- ~~Impressão direta para a impressora com configuração automática~~
+- ~~Mudança de template de layers no AutoCAD~~
+- ~~Colorir e Descolorir layer de Layout~~
+- ~~Interface Visual~~
 
+Observação: os recursos riscados na lista acima estavam presentes durante o período de desenvolvimento ativo do plugin e ápice do seu uso. No entanto, como são extremamente *hard-coded* (estamos falando de LISP, uma linguagem de programação arcaica, meu Deus...) e super específicas para os padrões daquele escritório, decidi removê-las para deixá-lo mais genérico e usável.
+
+---
+## Comandos:
+
+- `PRINTALLTOPDF` - Imprime todas as pranchas selecionadas *que possuam um bloco configurado*
+- `COTAS_CORRIGIRSELECIONADAS` - Reseta as cotas editas que você selecionar para o valor correto
+- `COTAS_CORRIGIRTODAS` - Reseta TODAS as cotas do arquivo para o valor correto. **CUIDADO**
+
+---
 ## Instalar o Plugin
 
 Em cada computador que for usar o plugin, siga as seguintes instruções:
 
 - Digite o comando no AutoCAD: "APPLOAD"
-- Navegue para a pasta onde está o localizado o arquivo do Plugin
+- Navegue para a pasta onde está o localizado o arquivo do plugin "yoprint.lsp"
 - Selecione o arquivo
 - Clique em "Load"
 - Se aparecer uma grande mesangem e 3 botões, clique em "Always Load"
 
+**ATENÇÃO**: É necessário estar presente um arquivo CTB com o exato nome: "ctb - yoprint.ctb" na pasta padrão do AutoCAD para esses arquivos. Pegue seu arquivo de CTB que você já usa com o padrão do seu escritório e renomeie ele com o nome mencionado, depois coloque na pasta do AutoCAD para CTBs. Dica: Digite o comando `STYLESMANAGER` que o AutoCAD vai abrir automaticamente essa pasta. Basta jogar seu arquivo ctb lá dentro (com o nome certo).
+
+---
+## Configurar para sempre carregar o plugin ao abrir o AutoCAD
+
+
+É possível configurar para que o AutoCAD sempre carregue o plugin durante a inicialização (embora esse comportamento seja instável e nem sempre funcione, especialmente se o arquivo estiver na rede, não custa tentar). Siga as intruções:
+
+- Digite o comando no AutoCAD: "APPLOAD"
+- No canto inferior direito, no campo "Startup Suite", clique no botão "Contents..."
+- Clique no botão "Add..."
+- Navegue para a pasta onde está o arquivo do plugin "yoprint.lsp"
+- Selecione o arquivo
+- Clique em "Abrir"
+- Clique em "Close"
+
+---
 ## Desativar abertura automática de PDFs no visualizador padrão
 
 Antes de usar, desative a abertura automática dos PDFs impressos, ou então você vai se deparar com centenas de PDFs sendo abertos instantâneamente no seu visualizador padrão (navegador, Acrobat Reader ou qualquer outro). Siga os seguintes passos para desativar (faça isso em cada computador):
